@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "394849398271",
+    "project_id": "auto-guard-35fc3",
+    "storage_bucket": "auto-guard-35fc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394849398271:android:bef2503ad9389c2b740bca",
+        "android_client_info": {
+          "package_name": "com.bacon.auto_guard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394849398271-bv89cf3eq018ksc1fgvf4ru4fago1jtq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn2NzIhQMr_sMN9c04SeSgSoC1LM9wvB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394849398271-bv89cf3eq018ksc1fgvf4ru4fago1jtq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
