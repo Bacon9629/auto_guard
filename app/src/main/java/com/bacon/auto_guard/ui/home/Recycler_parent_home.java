@@ -13,6 +13,7 @@ import com.bacon.auto_guard.R;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,13 +24,18 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
     ArrayList<String> parent_data;
     TextView last_view;
     RecyclerView last_recycler;
-
+    Recycler_soon_home son_adapter;
+    HashMap<String, String> son_data;
 
     public Recycler_parent_home(Context context, ArrayList<String> parent_data){
         this.context = context;
         this.parent_data = parent_data;
     }
 
+    public void notifySonChanged(HashMap<String, String> son_data){
+        super.notifyDataSetChanged();
+        this.son_data = son_data;
+    }
 
     @NonNull
     @Override

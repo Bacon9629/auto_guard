@@ -7,19 +7,19 @@
     android:background="#00000000">
 
     <ImageView
-        android:id="@+id/status"
+        android:id="@+id/img_status"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/where"
+        app:layout_constraintEnd_toStartOf="@+id/son_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_light_off" />
 
     <TextView
-        android:id="@+id/where"
+        android:id="@+id/son_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -30,11 +30,20 @@
         android:textAllCaps="false"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/status"
+        app:layout_constraintBottom_toBottomOf="@+id/img_status"
         app:layout_constraintEnd_toStartOf="@+id/bt_switch"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/status"
-        app:layout_constraintTop_toTopOf="@+id/status" />
+        app:layout_constraintStart_toEndOf="@+id/img_status"
+        app:layout_constraintTop_toTopOf="@+id/img_status" />
+
+    <TextView
+        android:id="@+id/text_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/son_name"
+        app:layout_constraintEnd_toEndOf="@+id/son_name"
+        app:layout_constraintTop_toTopOf="@+id/son_name"
+        tools:text="狀態" />
 
     <ImageButton
         android:id="@+id/bt_switch"
@@ -42,22 +51,22 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:adjustViewBounds="false"
-        android:background="#00FFFFFF"
+        android:background="@drawable/background_dark_shap"
         android:src="@drawable/ic_off_switch"
         android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/status"
+        app:layout_constraintBottom_toBottomOf="@+id/img_status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/where"
-        app:layout_constraintTop_toTopOf="@+id/status" />
+        app:layout_constraintStart_toEndOf="@+id/son_name"
+        app:layout_constraintTop_toTopOf="@+id/img_status" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginTop="8dp"
-        android:background="#8B000000"
+        android:background="#4A000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status" />
+        app:layout_constraintTop_toBottomOf="@+id/img_status" />
 </androidx.constraintlayout.widget.ConstraintLayout>
