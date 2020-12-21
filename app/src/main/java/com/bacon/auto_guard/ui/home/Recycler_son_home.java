@@ -1,6 +1,8 @@
 package com.bacon.auto_guard.ui.home;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,30 +14,39 @@ import com.bacon.auto_guard.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-class Recycler_soon_home extends RecyclerView.Adapter<Recycler_soon_home.ViewHolder> {
+import static android.content.ContentValues.TAG;
 
-    ArrayList<HashMap<String , String>> myData;
+class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolder> {
+
+    ArrayList<HashMap<String, String>> myData;
     Context context;
+    SharedPreferences preferences;
 
-    public Recycler_soon_home(Context context, ArrayList<HashMap<String , String>> myData){
+    public Recycler_son_home(Context context, ArrayList<HashMap<String, String>> myData) {
+        this.context = context;
+        this.myData = myData;
+        preferences = context.getSharedPreferences(context.getString(R.string.preference_name), 0);
+        Log.d(TAG,"inin");
 
     }
 
-    public void notifyMyChanged(ArrayList<HashMap<String , String>> myData){
-        super.notifyDataSetChanged();
+    public void notifyMyChanged(ArrayList<HashMap<String, String>> myData) {
         this.myData = myData;
+//        Log.d(TAG,myData.size()+"");
+        super.notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        if (myData.get(position).get("type").equals("light"))
+        if (Objects.equals(myData.get(position).get("type"), "default"))
             return 0;
-        else if (myData.get(position).get("type").equals("camera"))
+        else if (Objects.equals(myData.get(position).get("type"), "camera"))
             return 1;
         else
             return 2;
@@ -45,17 +56,16 @@ class Recycler_soon_home extends RecyclerView.Adapter<Recycler_soon_home.ViewHol
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+        Log.d(TAG,"inin");
+
         View view;
         if (viewType == 0) {
             view = LayoutInflater.from(context).inflate(R.layout.recycler_home_son_other, parent, false);
             return new ViewHolder_Other(view);
-        }
-        else if (viewType == 1){
-            view = LayoutInflater.from(context).inflate(R.layout.recycler_home_son_camera,parent,false);
+        } else if (viewType == 1) {
+            view = LayoutInflater.from(context).inflate(R.layout.recycler_home_son_camera, parent, false);
             return new ViewHolder_camera(view);
-        }
-
-        else{
+        } else {
 //            view = null;
             return null;
         }
@@ -65,18 +75,18 @@ class Recycler_soon_home extends RecyclerView.Adapter<Recycler_soon_home.ViewHol
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        if (holder.returnType() == 0){
+        if (holder.returnType() == 0) {
             ViewHolder_Other other = (ViewHolder_Other) holder;
             //TODO 這裡寫other的內容
 
             other.name.setText(myData.get(position).get("name"));
 
-            if (myData.get(position).get("status").equals("ON")){
+            if (myData.get(position).get("status").equals("ON")) {
                 other.img_status.setImageDrawable(context.getDrawable(R.drawable.ic_light_on));
 //                other.text_status
                 other.btn_switch.setImageDrawable(context.getDrawable(R.drawable.ic_on_switch));
 
-            }else{
+            } else {
 
                 other.img_status.setImageDrawable(context.getDrawable(R.drawable.ic_light_off));
 //                other.text_status
@@ -94,10 +104,9 @@ class Recycler_soon_home extends RecyclerView.Adapter<Recycler_soon_home.ViewHol
             });
 
 
-
             //other end
 
-        }else if (holder.returnType() == 1){
+        } else if (holder.returnType() == 1) {
             ViewHolder_camera camera = (ViewHolder_camera) holder;
             //TODO 這裡寫camera的內容
 
@@ -105,15 +114,21 @@ class Recycler_soon_home extends RecyclerView.Adapter<Recycler_soon_home.ViewHol
         }
 
 
-
     }
 
     @Override
     public int getItemCount() {
+        String a = preferences.getString("home_electronic", "null");
+        Log.d(TAG,"dataSize "+myData.size());
+        if (myData.size() == 0){
+            return 0;
+        }else if (a.equals(myData.get(0).get("parent")))
+            return myData.size();
+
         return 0;
     }
 
-    public abstract static class ViewHolder extends RecyclerView.ViewHolder{
+    public abstract static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -123,7 +138,7 @@ class Recycler_soon_home extends RecyclerView.Adapter<Recycler_soon_home.ViewHol
         public abstract int returnType();
     }
 
-    public static class ViewHolder_Other extends ViewHolder{
+    public static class ViewHolder_Other extends ViewHolder {
         ImageView img_status;
         ImageButton btn_switch;
         TextView text_status, name;
@@ -142,7 +157,7 @@ class Recycler_soon_home extends RecyclerView.Adapter<Recycler_soon_home.ViewHol
         }
     }
 
-    public static class ViewHolder_camera extends ViewHolder{
+    public static class ViewHolder_camera extends ViewHolder {
 
 
         public ViewHolder_camera(@NonNull View itemView) {

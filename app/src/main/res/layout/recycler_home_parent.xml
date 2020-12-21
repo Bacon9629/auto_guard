@@ -64,6 +64,5 @@
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/electronic_name"
-        app:layout_constraintTop_toBottomOf="@+id/electronic_arrow"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/electronic_arrow" />
 </androidx.constraintlayout.widget.ConstraintLayout>
