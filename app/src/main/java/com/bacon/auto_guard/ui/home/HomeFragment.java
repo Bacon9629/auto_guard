@@ -22,6 +22,7 @@ import com.bacon.auto_guard.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -29,11 +30,10 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private Context context;
-    int count = 0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d(TAG,"big");
+//        Log.d(TAG,"big");
 
         context = getActivity();
 
@@ -47,19 +47,18 @@ public class HomeFragment extends Fragment {
 
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel.putContext(context);
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-
-//        Recycler_son_home son_adapter = new Recycler_son_home(context, home_data.getDefault_data());
 
         RecyclerView recycler_parent = root.findViewById(R.id.recycler_home_parent);
         Recycler_parent_home parent_adapter = new Recycler_parent_home(context,name_data);
         recycler_parent.setLayoutManager(new LinearLayoutManager(context));
         recycler_parent.setAdapter(parent_adapter);
 
-        homeViewModel.getSonData().observe(getViewLifecycleOwner(), (Observer<ArrayList<HashMap<String,String>>>) s -> {
+        homeViewModel.getSonData().observe(getViewLifecycleOwner(), (Observer<ArrayList<Son_Data_format>>) s -> {
             parent_adapter.putSon_data(s);
+//            Log.d(TAG, Objects.requireNonNull(s.get(0).get("name")));
         });
 
         return root;

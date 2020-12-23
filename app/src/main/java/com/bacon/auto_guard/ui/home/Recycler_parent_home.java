@@ -27,7 +27,7 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
     TextView last_text;
     RecyclerView last_recycler;
     Recycler_son_home son_adapter;
-    ArrayList<HashMap<String, String>> son_data;
+    ArrayList<Son_Data_format> son_data;
     SharedPreferences preferences;
 
     public Recycler_parent_home(Context context, ArrayList<String> parent_data){
@@ -38,9 +38,8 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
         son_adapter = new Recycler_son_home(context,son_data);
     }
 
-    public void putSon_data(ArrayList<HashMap<String,String>> son_data){
+    public void putSon_data(ArrayList<Son_Data_format> son_data){
         this.son_data = son_data;
-//        Log.d(TAG,son_data.size()+"pppp");
         son_adapter.notifyMyChanged(son_data);
         super.notifyDataSetChanged();
     }
@@ -88,7 +87,7 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
 
                         now_recyler.setVisibility(View.GONE);
 
-
+                        Log.d(TAG,"touch1");
 
                     }else{
 
@@ -97,10 +96,13 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
 
                         //TODO 關閉last_text下面的recyclerView，開啟now_text下面的recycler_View，Adapter不要換，換裡面的data就好
 
+
                         last_recycler.setVisibility(View.GONE);
                         now_recyler.setVisibility(View.VISIBLE);
 
-                        preferences.edit().putString("home_electronic",now_text.getText().toString()).apply();
+                        preferences.edit().putString("home_electronic",now_text.getTag().toString()).apply();
+                        Log.d(TAG,"touch2" + now_text.getTag().toString());
+
 //                        now_recyler.setAdapter(son_adapter);
 
                         //end
@@ -117,6 +119,7 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
                     now_recyler.setVisibility(View.VISIBLE);
                     preferences.edit().putString("home_electronic",now_text.getTag().toString()).apply();
 //                    now_recyler.setAdapter(son_adapter);
+                    Log.d(TAG,"touch3");
                 }
 
             }

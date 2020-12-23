@@ -23,30 +23,30 @@ import static android.content.ContentValues.TAG;
 
 class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolder> {
 
-    ArrayList<HashMap<String, String>> myData;
+    ArrayList<Son_Data_format> myData;
     Context context;
     SharedPreferences preferences;
 
-    public Recycler_son_home(Context context, ArrayList<HashMap<String, String>> myData) {
+    public Recycler_son_home(Context context, ArrayList<Son_Data_format> myData) {
         this.context = context;
         this.myData = myData;
         preferences = context.getSharedPreferences(context.getString(R.string.preference_name), 0);
-        Log.d(TAG,"inin");
+//        Log.d(TAG,"inin");
 
     }
 
-    public void notifyMyChanged(ArrayList<HashMap<String, String>> myData) {
+
+    public void notifyMyChanged(ArrayList<Son_Data_format> myData) {
         this.myData = myData;
-//        Log.d(TAG,myData.size()+"");
         super.notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        if (Objects.equals(myData.get(position).get("type"), "default"))
+        if (Objects.equals(myData.get(position).getType(), "default"))
             return 0;
-        else if (Objects.equals(myData.get(position).get("type"), "camera"))
+        else if (Objects.equals(myData.get(position).getType(), "camera"))
             return 1;
         else
             return 2;
@@ -56,7 +56,7 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        Log.d(TAG,"inin");
+//        Log.d(TAG,"inin");
 
         View view;
         if (viewType == 0) {
@@ -79,9 +79,11 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
             ViewHolder_Other other = (ViewHolder_Other) holder;
             //TODO 這裡寫other的內容
 
-            other.name.setText(myData.get(position).get("name"));
+            other.name.setText(myData.get(position).getName());
 
-            if (myData.get(position).get("status").equals("ON")) {
+//            Log.d(TAG,position+" => "+myData.get(position).get("name"));
+
+            if (myData.get(position).getStatus().equals("ON")) {
                 other.img_status.setImageDrawable(context.getDrawable(R.drawable.ic_light_on));
 //                other.text_status
                 other.btn_switch.setImageDrawable(context.getDrawable(R.drawable.ic_on_switch));
@@ -119,10 +121,10 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
     @Override
     public int getItemCount() {
         String a = preferences.getString("home_electronic", "null");
-        Log.d(TAG,"dataSize "+myData.size());
+//        Log.d(TAG,"data =  "+myData.get(0).getParent()+" , "+a);
         if (myData.size() == 0){
             return 0;
-        }else if (a.equals(myData.get(0).get("parent")))
+        }else if (a.equals(myData.get(0).getParent()))
             return myData.size();
 
         return 0;
@@ -132,7 +134,6 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
         }
 
         public abstract int returnType();
