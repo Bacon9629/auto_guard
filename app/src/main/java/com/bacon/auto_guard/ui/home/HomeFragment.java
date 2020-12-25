@@ -1,9 +1,11 @@
 package com.bacon.auto_guard.ui.home;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,27 +39,44 @@ public class HomeFragment extends Fragment {
 
         context = getActivity();
 
-        //TODO 這裡要從網路上抓parent name的資料
-        ArrayList<String> name_data = new ArrayList<>();
-        name_data.add("房間 1");
-        name_data.add("房間 2");
-        name_data.add("房間 3");
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        Home_Data home_data = new Home_Data();
+
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("載入中...");
+        progressDialog.setCancelable(false);
 
         homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+                new ViewModelProvider(HomeFragment.this).get(HomeViewModel.class);
         homeViewModel.putContext(context);
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                //TODO 這裡要從網路上抓parent name的資料
+                ArrayList<String> name_data = new ArrayList<>();
+                name_data.add("房間 1");
+                name_data.add("房間 2");
+//        name_data.add("房間 3");
 
-        RecyclerView recycler_parent = root.findViewById(R.id.recycler_home_parent);
-        Recycler_parent_home parent_adapter = new Recycler_parent_home(context,name_data);
-        recycler_parent.setLayoutManager(new LinearLayoutManager(context));
-        recycler_parent.setAdapter(parent_adapter);
+                RecyclerView recycler_parent = root.findViewById(R.id.recycler_home_parent);
+                Recycler_parent_home parent_adapter = new Recycler_parent_home(context,home_data.getParent_list());
+                recycler_parent.setLayoutManager(new LinearLayoutManager(context));
+                recycler_parent.setAdapter(parent_adapter);
 
-        homeViewModel.getSonData().observe(getViewLifecycleOwner(), (Observer<ArrayList<Son_Data_format>>) s -> {
-            parent_adapter.putSon_data(s);
+                progressDialog.dismiss();
+
+                homeViewModel.getSonData().observe(getViewLifecycleOwner(), (Observer<ArrayList<Son_Data_format>>) s -> {
+                    parent_adapter.putSon_data(s);
 //            Log.d(TAG, Objects.requireNonNull(s.get(0).get("name")));
-        });
+                });
+            }
+        };
+
+
+        home_data.download_parent_data(handler,runnable);
+
 
         return root;
     }

@@ -36,10 +36,11 @@ public class HomeViewModel extends ViewModel {
     SharedPreferences preferences;
     DataSnapshot dataSnapshot;
     String last_touch = "";
-    boolean refresh_flag = false;
 
     Handler handler;
     Runnable runUI;
+
+
 
     public HomeViewModel() {
 
@@ -47,6 +48,7 @@ public class HomeViewModel extends ViewModel {
 
         son_list = new MutableLiveData<>();
         get_internet_data();
+        handler = new Handler();
 
 //        lastTouch_listener();
 
@@ -58,7 +60,6 @@ public class HomeViewModel extends ViewModel {
             }
         };
 
-        handler = new Handler();
 //        handler.post(runUI);
 
         Thread thread = new Thread(new Runnable() {
@@ -78,7 +79,7 @@ public class HomeViewModel extends ViewModel {
         home_data.get_internet_data(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d(TAG,"get ALL => " + snapshot.toString());
+//                Log.d(TAG,"get ALL => " + snapshot.toString());
 //                home_data.select_parent_getData(snapshot,"房間 1");
                 dataSnapshot = snapshot;
                 refresh_data();
@@ -108,7 +109,6 @@ public class HomeViewModel extends ViewModel {
                 String temp = preferences.getString("home_electronic","");
                 if (!last_touch.equals(temp)) {
                     last_touch = temp;
-//                    refresh_flag = true;
                     handler.post(runUI);
                 }
 
