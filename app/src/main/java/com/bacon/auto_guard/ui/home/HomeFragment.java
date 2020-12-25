@@ -43,8 +43,6 @@ public class HomeFragment extends Fragment {
         name_data.add("房間 2");
         name_data.add("房間 3");
 
-        Home_Data home_data = new Home_Data();
-
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         homeViewModel.putContext(context);

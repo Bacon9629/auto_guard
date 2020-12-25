@@ -26,12 +26,14 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
     ArrayList<Son_Data_format> myData;
     Context context;
     SharedPreferences preferences;
+    Home_Data home_data;
 
     public Recycler_son_home(Context context, ArrayList<Son_Data_format> myData) {
         this.context = context;
         this.myData = myData;
         preferences = context.getSharedPreferences(context.getString(R.string.preference_name), 0);
 //        Log.d(TAG,"inin");
+        home_data = new Home_Data();
 
     }
 
@@ -79,6 +81,8 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
             ViewHolder_Other other = (ViewHolder_Other) holder;
             //TODO 這裡寫other的內容
 
+//            Log.d(TAG,myData.get(position).getParent());
+
             other.name.setText(myData.get(position).getName());
 
 //            Log.d(TAG,position+" => "+myData.get(position).get("name"));
@@ -101,6 +105,8 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
                 public void onClick(View v) {
 
                     //TODO 按鈕按下後要做甚麼
+//                    Log.d(TAG,"position = "+position+" content = "+myData.get(position).getParent()+myData.get(position).getName());
+                    home_data.send_switch_internet_data(context, myData.get(position));
 
                 }
             });

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import com.bacon.auto_guard.R;
@@ -35,6 +36,10 @@ public class HomeViewModel extends ViewModel {
     SharedPreferences preferences;
     DataSnapshot dataSnapshot;
     String last_touch = "";
+    boolean refresh_flag = false;
+
+    Handler handler;
+    Runnable runUI;
 
     public HomeViewModel() {
 
@@ -43,16 +48,29 @@ public class HomeViewModel extends ViewModel {
         son_list = new MutableLiveData<>();
         get_internet_data();
 
-        lastTouch_listener();
+//        lastTouch_listener();
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Looper.prepare();
-//                lastTouch_listener();
-//                Looper.loop();
-//            }
-//        }).start();
+        runUI = new Runnable() {
+            @Override
+            public void run() {
+                refresh_data();
+//                Log.d(TAG,"runnable is running");
+            }
+        };
+
+        handler = new Handler();
+//        handler.post(runUI);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                lastTouch_listener();
+                Looper.loop();
+            }
+        });
+
+        thread.start();
 
     }
 
@@ -63,6 +81,7 @@ public class HomeViewModel extends ViewModel {
                 Log.d(TAG,"get ALL => " + snapshot.toString());
 //                home_data.select_parent_getData(snapshot,"房間 1");
                 dataSnapshot = snapshot;
+                refresh_data();
 
             }
 
@@ -81,18 +100,24 @@ public class HomeViewModel extends ViewModel {
 
     private void lastTouch_listener() {
 
+//                Log.d(TAG,"runnable is running");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                Log.d(TAG,"runnable is running");
+
                 String temp = preferences.getString("home_electronic","");
-                if (!last_touch.equals(temp)){
+                if (!last_touch.equals(temp)) {
                     last_touch = temp;
-                    refresh_data();
+//                    refresh_flag = true;
+                    handler.post(runUI);
                 }
+
+
                 lastTouch_listener();
+
             }
-        },300);
+        },50);
+
 
     }
 

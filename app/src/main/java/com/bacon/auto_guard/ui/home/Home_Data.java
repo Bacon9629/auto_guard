@@ -1,11 +1,23 @@
 package com.bacon.auto_guard.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
 
 import static android.app.PendingIntent.getActivity;
 import static android.content.ContentValues.TAG;
@@ -13,77 +25,57 @@ import static android.content.ContentValues.TAG;
 class Home_Data {
 
     ArrayList<Son_Data_format> son_data = new ArrayList<>();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference internet_db;
 
     public Home_Data(){
+        internet_db = database.getReference("home").child("electronic");
+    }
 
-        setData();
-        sort();
+    public void get_internet_data(ValueEventListener valueEventListener){
+
+        internet_db.addValueEventListener(valueEventListener);
 
     }
 
-    private void sort() {
-
-
-
-    }
-
-    public void setData() {
-
-        //用getSharePreference來決定要給甚麼資料
-
-        Son_Data_format temp1;
-        Son_Data_format temp2;
-
-        for(int i=0;i<4;i++){
-
-
-
-            temp1 = new Son_Data_format("default", "房間 1", "電燈"+i, "ON");
-//            temp2 = new Son_Data_format("default", "房間 2", "插座"+i, "ON");
-
-            son_data.add(temp1);
-//            son_data.add(temp2);
-
+    public ArrayList<Son_Data_format> select_parent_getData(DataSnapshot snapshot, String parent){
+        son_data.clear();
+//        Log.d(TAG,snapshot.child(parent).getChildren().iterator().next().getValue().toString());
+        for (DataSnapshot dataSnapshot : snapshot.child(parent).getChildren()) {
+            son_data.add(
+                    new Son_Data_format("default", parent, dataSnapshot.getKey(), dataSnapshot.getValue().toString()));
+//            Log.d(TAG,dataSnapshot.getKey());
         }
-//        Log.d(TAG, Objects.requireNonNull(son_data.get(0).get("name")));
-
-    }
-
-    private void from_internet_to_here(String parent_name){
-        //TODO 從網路抓取資料，非同步
-
+        return son_data;
     }
 
     public ArrayList<Son_Data_format> getSon_data(){
         //從getSharePreference來決定要抓取甚麼資料
-//
-//        ArrayList<Son_Data_format> temp = (ArrayList<Son_Data_format>) son_data.clone();
-////        Log.d(TAG,son_data.size()+" = first");
-//        Son_Data_format temp_data;
-//        for(int i=0;i<temp.size();i++){
-//            temp_data = son_data.get(i);
-//            if (!temp_data.getParent().equals(parent)){
-//                temp.remove(temp_data);
-//            }
-//        }
-////        Log.d(TAG,son_data.size()+" = second");
-//
 
         return son_data;
     }
+    public void send_switch_internet_data(Context context, Son_Data_format son_data){
 
-    public ArrayList<HashMap<String,String>> getDefault_data(){
-        HashMap<String, String> temp_map = new HashMap<>();
-        ArrayList<HashMap<String, String>> temp_array = new ArrayList<>();
+        //在這裡才改變資料
 
-        temp_map.put("name","電燈 1");
-        temp_map.put("status","ON");
-        temp_map.put("parent","房間 1");
-        temp_map.put("type","default");
-        temp_array.add(temp_map);
+        String temp;
 
-        return temp_array;
+        if (son_data.getStatus().equals("ON"))
+            temp = "OFF";
+        else
+            temp = "ON";
+
+
+        Log.d(TAG,son_data.getParent()+son_data.getName());
+        internet_db.child(son_data.getParent()).child(son_data.getName())
+                .setValue(temp)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context,"傳送訊息失敗",Toast.LENGTH_LONG).show();
+                    }
+                });
+
     }
-
 
 }
