@@ -90,15 +90,19 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
             if (myData.get(position).getStatus().equals("ON")) {
                 other.img_status.setImageDrawable(context.getDrawable(R.drawable.ic_light_on));
 //                other.text_status
-                other.btn_switch.setImageDrawable(context.getDrawable(R.drawable.ic_on_switch));
+//                other.btn_switch.setImageDrawable(context.getDrawable(R.drawable.ic_on_switch));
+                other.btn_switch.setBackground(context.getDrawable(R.drawable.background_light_shap));
 
             } else {
 
                 other.img_status.setImageDrawable(context.getDrawable(R.drawable.ic_light_off));
 //                other.text_status
-                other.btn_switch.setImageDrawable(context.getDrawable(R.drawable.ic_off_switch));
+//                other.btn_switch.setImageDrawable(context.getDrawable(R.drawable.ic_off_switch));
+                other.btn_switch.setBackground(context.getDrawable(R.drawable.background_dark_shap));
 
             }
+
+
 
             other.btn_switch.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,6 +111,7 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
                     //TODO 按鈕按下後要做甚麼
 //                    Log.d(TAG,"position = "+position+" content = "+myData.get(position).getParent()+myData.get(position).getName());
                     home_data.send_switch_internet_data(context, myData.get(position));
+
 
                 }
             });
