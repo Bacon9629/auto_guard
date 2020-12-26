@@ -48,7 +48,9 @@ class Home_Data {
                 for (DataSnapshot snapshot : Objects.requireNonNull(task.getResult()).getChildren()) {
 
                     parent_list.add(snapshot.getKey());
+
                 }
+                parent_list.add("pass");
                 // 這裡回傳資料
                 handler.post(next_step);
 

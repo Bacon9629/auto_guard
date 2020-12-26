@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,8 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+
+
         holder.arrow_button.setTag(parent_data.get(position));
         holder.arrow_button.setOnClickListener(setClick(holder.arrow_button, holder.recycler_son));
         String last = preferences.getString("home_electronic","");
@@ -74,6 +77,10 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
         holder.recycler_son.setAdapter(new Recycler_son_home(context,son_data,parent_data.get(position)));
 
         recycler_list.add(position,holder.recycler_son);
+
+        if (parent_data.get(position).equals("pass")){
+            holder.constraint.setVisibility(View.GONE);
+        }
 
     }
 
@@ -145,12 +152,14 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name, arrow_button;
         RecyclerView recycler_son;
+        ConstraintLayout constraint;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.electronic_name);
             arrow_button = itemView.findViewById(R.id.electronic_arrow);
             recycler_son = itemView.findViewById(R.id.electronic_recycler_son);
+            constraint = itemView.findViewById(R.id.electronic_constrain);
         }
     }
 }
