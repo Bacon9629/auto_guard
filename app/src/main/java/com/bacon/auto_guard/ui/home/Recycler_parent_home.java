@@ -58,6 +58,12 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
 
         holder.arrow_button.setTag(parent_data.get(position));
         holder.arrow_button.setOnClickListener(setClick(holder.arrow_button, holder.recycler_son));
+        String last = preferences.getString("home_electronic","");
+        if (last.equals(parent_data.get(position))){
+            holder.arrow_button.setBackground(context.getDrawable(R.drawable.ic_arrow_up));
+        }else{
+            holder.arrow_button.setBackground(context.getDrawable(R.drawable.ic_arrow_down));
+        }
 
         holder.name.setTag(parent_data.get(position));
         holder.name.setText(parent_data.get(position));
@@ -78,72 +84,49 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
             public void onClick(View v) {
                 Toast.makeText(context,now_text.getTag().toString(),Toast.LENGTH_SHORT).show();
 
+
+
                 if (last_text != null){
                     if (last_text == now_text){
 
-                        last_text = null;
-                        now_text.setBackground(context.getDrawable(R.drawable.ic_arrow_down));
-                        last_recycler = null;
+//                        last_text = null;
+//                        now_text.setBackground(context.getDrawable(R.drawable.ic_arrow_down));
+//                        last_recycler = null;
 
                         //TODO 關閉now_text下面的recyclerView，Adapter不要換，換裡面的data就好
 
-                        Log.d(TAG,"close" + preferences.getString("home_electronic",""));
+//                        Log.d(TAG,"close" + preferences.getString("home_electronic",""));
 
                         preferences.edit().putString("home_electronic","").apply();
 
-//                        set_recycler_GONE();
-//                        now_recyler.setVisibility(View.GONE);
-
-
-
                     }else{
 
-                        now_text.setBackground(context.getDrawable(R.drawable.ic_arrow_up));
-                        last_text.setBackground(context.getDrawable(R.drawable.ic_arrow_down));
+//                        now_text.setBackground(context.getDrawable(R.drawable.ic_arrow_up));
+//                        last_text.setBackground(context.getDrawable(R.drawable.ic_arrow_down));
 
                         //TODO 關閉last_text下面的recyclerView，開啟now_text下面的recycler_View，Adapter不要換，換裡面的data就好
 
-                        Log.d(TAG,"touch" + preferences.getString("home_electronic",""));
+//                        Log.d(TAG,"touch" + preferences.getString("home_electronic",""));
 
-//                        set_recycler_GONE();
-//                        last_recycler.setVisibility(View.GONE);
                         preferences.edit().putString("home_electronic",now_text.getTag().toString()).apply();
-//                        recycler_list.get(position).setVisibility(View.VISIBLE);
-//                        now_recyler.setVisibility(View.VISIBLE);
-//                        for(RecyclerView view : recycler_list){
-//                            if (view.getTag() == parent){
-//                                view.setVisibility(View.VISIBLE);
-//                            }
-//                        }
-
-
-
-
-//                        now_recyler.setAdapter(son_adapter);
 
                         //end
 
-                        last_text = now_text;
-                        last_recycler = now_recyler;
+//                        last_text = now_text;
+//                        last_recycler = now_recyler;
 
                     }
                 }else{
-                    last_text = now_text;
-                    last_recycler = now_recyler;
-                    now_text.setBackground(context.getDrawable(R.drawable.ic_arrow_up));
+//                    last_text = now_text;
+//                    last_recycler = now_recyler;
+//                    now_text.setBackground(context.getDrawable(R.drawable.ic_arrow_up));
                     //TODO 開啟last_text or now_text下面的recyclerView，Adapter不要換，換裡面的data就好
-//                    set_recycler_GONE();
-//                    recycler_list.get(position).setVisibility(View.VISIBLE);
-//                    now_recyler.setVisibility(View.VISIBLE);
-//                    for(RecyclerView view : recycler_list){
-//                        if (view.getTag() == parent){
-//                            view.setVisibility(View.VISIBLE);
-//                        }
-//                    }
-                    Log.d(TAG,"touch" + preferences.getString("home_electronic",""));
+//                    Log.d(TAG,"touch" + preferences.getString("home_electronic",""));
                     preferences.edit().putString("home_electronic",now_text.getTag().toString()).apply();
 
                 }
+
+//                Recycler_parent_home.super.notifyDataSetChanged();
 
             }
         };
