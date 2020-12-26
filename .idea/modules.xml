@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auto_guard.iml" filepath="$PROJECT_DIR$/.idea/modules/auto_guard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/auto_guard.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/auto_guard.app.iml" />
+    </modules>
+  </component>
+</project>

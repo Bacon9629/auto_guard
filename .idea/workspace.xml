@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="logLevel" value="verbose" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="ContentValues" />
+        <option name="name" value="Unnamed-0" />
+        <option name="packageNamePattern" value="" />
+      </filter>
+    </filters>
+  </component>
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Unnamed-0" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5ae463cc-e829-45b1-924e-68620b214e0a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Home_Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Home_Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Recycler_parent_home.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Recycler_parent_home.java" afterDir="false" />
+    </list>
+    <list id="1f55e8f3-4bd9-40ef-bbf1-cc01830c7701" name="123321" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_4_API_28_2]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="layoutResourceFile" />
+        <option value="resourceFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="onto" value="6d6f4f57bdc9f535c9c71d680e60de14b8bbf936" />
+  </component>
+  <component name="ProjectId" id="1lpefG4407GR3Bel1Fbl0T5qivD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_4_API_28_2" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-12-26T18:16:18.353Z" />
+    <property name="ResourceManagerPrefKey.ResourceType" value="LAYOUT" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
+    <property name="android-custom-viewC:/Users/Peng/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED" value="RecyclerView" />
+    <property name="android.sdk.path" value="G:/androidSDK" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="multi-representation-previewC:/Users/Peng/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_selected" value="Custom views" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="auto_guard.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5ae463cc-e829-45b1-924e-68620b214e0a" name="Default Changelist" comment="" />
+      <changelist id="1f55e8f3-4bd9-40ef-bbf1-cc01830c7701" name="123321" comment="" />
+      <created>1608298561144</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1608298561144</updated>
+    </task>
+    <task id="LOCAL-00001" summary="first">
+      <created>1608382428281</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1608382428281</updated>
+    </task>
+    <task id="LOCAL-00002" summary="home已經可以顯示recycler_parent，還不知道要用甚麼資料的格式">
+      <created>1608395783371</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1608395783371</updated>
+    </task>
+    <task id="LOCAL-00003" summary="home的recycler_parent已經OK，recycler_son還沒，資料格式也還沒定">
+      <created>1608399793145</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1608399793145</updated>
+    </task>
+    <task id="LOCAL-00004" summary="休息一下">
+      <created>1608468113963</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1608468113963</updated>
+    </task>
+    <task id="LOCAL-00005" summary="可以顯示那些房間要用甚麼adapter，但還有BUG，只能顯示電燈5?&#10;在son_adapter裡面可以用引數取代SharePreference">
+      <created>1608526908954</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608526908954</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Recycler_son_home的開關按鈕的監聽還沒做">
+      <created>1608747794628</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1608747794628</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Recycler_son_home的開關按鈕的監聽還沒做&#10;成功跟網路資料庫連結，但處理資料沒有用副執行續，速度較慢">
+      <created>1608876553086</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1608876553086</updated>
+    </task>
+    <task id="LOCAL-00008" summary="按鈕監聽OK，副執行續OK，下一步先做robot UI">
+      <created>1608901191767</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1608901191767</updated>
+    </task>
+    <task id="LOCAL-00009" summary="按下按鈕亮顏色，下一步先做robot UI">
+      <created>1608901933997</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1608901933997</updated>
+    </task>
+    <task id="LOCAL-00010" summary="parent 跟著database,下一步先做robot UI">
+      <created>1608913663681</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1608913663681</updated>
+    </task>
+    <task id="LOCAL-00011" summary="低版本會有BUG，已修好,下一步先做robot UI">
+      <created>1608993425101</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1608993425101</updated>
+    </task>
+    <task id="LOCAL-00012" summary="temp_有BUGGG!!!!!!!!">
+      <created>1608998997566</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1608998997566</updated>
+    </task>
+    <task id="LOCAL-00013" summary="...">
+      <created>1608999397174</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1608999397174</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Revert &quot;temp_有BUGGG!!!!!!!!&quot;&#10;&#10;This reverts commit 500d8bbe">
+      <created>1609000283790</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1609000283790</updated>
+    </task>
+    <task id="LOCAL-00015" summary=".....">
+      <created>1609000783227</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1609000783227</updated>
+    </task>
+    <task id="LOCAL-00016" summary="........">
+      <created>1609000851846</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1609000851846</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Revert &quot;低版本會有BUG，已修好,下一步先做robot UI&quot;&#10;&#10;This reverts commit 6d6f4f57">
+      <created>1609000882033</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1609000882033</updated>
+    </task>
+    <task id="LOCAL-00018" summary="test">
+      <created>1609001163242</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1609001163242</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Revert &quot;...&quot;&#10;&#10;This reverts commit 4b1aac04">
+      <created>1609001222208</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1609001222208</updated>
+    </task>
+    <task id="LOCAL-00020" summary="123321">
+      <created>1609001356564</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1609001356564</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Revert &quot;temp_有BUGGG!!!!!!!!&quot;&#10;&#10;This reverts commit 500d8bbe">
+      <created>1609002209263</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1609002209263</updated>
+    </task>
+    <task id="LOCAL-00022" summary="成功DE掉BUG了，但沒辦法收回">
+      <created>1609005940946</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1609005940946</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first" />
+    <MESSAGE value="home已經可以顯示recycler_parent，還不知道要用甚麼資料的格式" />
+    <MESSAGE value="home的recycler_parent已經OK，recycler_son還沒，資料格式也還沒定" />
+    <MESSAGE value="休息一下" />
+    <MESSAGE value="可以顯示那些房間要用甚麼adapter，但還有BUG，只能顯示電燈5?&#10;在son_adapter裡面可以用引數取代SharePreference" />
+    <MESSAGE value="Recycler_son_home的開關按鈕的監聽還沒做" />
+    <MESSAGE value="Recycler_son_home的開關按鈕的監聽還沒做&#10;成功跟網路資料庫連結，但處理資料沒有用副執行續，速度較慢" />
+    <MESSAGE value="按鈕監聽OK，副執行續OK，下一步先做robot UI" />
+    <MESSAGE value="按下按鈕亮顏色，下一步先做robot UI" />
+    <MESSAGE value="update again,下一步先做robot UI" />
+    <MESSAGE value="parent 跟著database,下一步先做robot UI" />
+    <MESSAGE value="低版本會有BUG，已修好,下一步先做robot UI" />
+    <MESSAGE value="temp_有BUGGG!!!!!!!!" />
+    <MESSAGE value="..." />
+    <MESSAGE value="....." />
+    <MESSAGE value="........" />
+    <MESSAGE value="Revert &quot;低版本會有BUG，已修好,下一步先做robot UI&quot;&#10;&#10;This reverts commit 6d6f4f57" />
+    <MESSAGE value="test" />
+    <MESSAGE value="Revert &quot;...&quot;&#10;&#10;This reverts commit 4b1aac04" />
+    <MESSAGE value="123321" />
+    <MESSAGE value="NONONO" />
+    <MESSAGE value="Revert &quot;temp_有BUGGG!!!!!!!!&quot;&#10;&#10;This reverts commit 500d8bbe" />
+    <MESSAGE value="成功DE掉BUG了，但沒辦法收回" />
+    <option name="LAST_COMMIT_MESSAGE" value="成功DE掉BUG了，但沒辦法收回" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="586" y="198" key="#Inspections" timestamp="1608519519368">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="586" y="198" key="#Inspections/0.0.1920.1040@0.0.1920.1040" timestamp="1608519519368" />
+    <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser" timestamp="1608896949876">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608896949876" />
+    <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608517759764" />
+    <state x="401" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1608304854064">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="401" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608304854064" />
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1608397904568">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608397904568" />
+    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1609003262321">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609003262321" />
+    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1608744159019" />
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog" timestamp="1608430537325">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608430537325" />
+    <state x="828" y="284" width="327" height="426" key="AndroidCreateXmlResourceDialog" timestamp="1608518266347">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="828" y="284" width="327" height="426" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608518266347" />
+    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1609005938223">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609005938223" />
+    <state x="552" y="81" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1608747793300" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1609001874471">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609001874471" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608747382806" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1609002357207">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609002357207" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1608384403048" />
+    <state x="452" y="203" key="Git.Interactive.Rebase.Dialog" timestamp="1609001630321">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="452" y="203" key="Git.Interactive.Rebase.Dialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609001630321" />
+    <state width="1877" height="273" key="GridCell.Tab.0.bottom" timestamp="1609007127925">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="273" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007127925" />
+    <state width="1876" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
+    <state width="1877" height="273" key="GridCell.Tab.0.center" timestamp="1609007127925">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="273" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007127925" />
+    <state width="1876" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
+    <state width="1877" height="273" key="GridCell.Tab.0.left" timestamp="1609007127925">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="273" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007127925" />
+    <state width="1876" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
+    <state width="1877" height="273" key="GridCell.Tab.0.right" timestamp="1609007127925">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="273" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007127925" />
+    <state width="1876" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
+    <state x="184" y="86" key="MergeDialog" timestamp="1609002204887">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="86" key="MergeDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609002204887" />
+    <state x="596" y="280" key="MultipleFileMergeDialog" timestamp="1609002204899">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="596" y="280" key="MultipleFileMergeDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609002204899" />
+    <state x="668" y="221" key="RollbackChangesDialog" timestamp="1608999731361">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="668" y="221" key="RollbackChangesDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608999731361" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1608382242197">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1608382242197" />
+    <state x="806" y="433" key="VCS.ChangelistChooser" timestamp="1609002124999">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="806" y="433" key="VCS.ChangelistChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609002124999" />
+    <state x="630" y="254" key="VcsDiffUtil.ChangesDialog" timestamp="1609001616343">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="630" y="254" key="VcsDiffUtil.ChangesDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609001616343" />
+    <state x="656" y="362" key="edit.logcat.filter.dialog.dimensions" timestamp="1608522994847">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="656" y="362" key="edit.logcat.filter.dialog.dimensions/0.0.1920.1040@0.0.1920.1040" timestamp="1608522994847" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1608873061810">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608873061810" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608872329288">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608872329288" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608658800111" />
+  </component>
+</project>
