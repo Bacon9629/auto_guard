@@ -87,12 +87,14 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
 
                         //TODO 關閉now_text下面的recyclerView，Adapter不要換，換裡面的data就好
 
+                        Log.d(TAG,"close" + preferences.getString("home_electronic",""));
+
                         preferences.edit().putString("home_electronic","").apply();
 
 //                        set_recycler_GONE();
 //                        now_recyler.setVisibility(View.GONE);
 
-                        Log.d(TAG,"close");
+
 
                     }else{
 
@@ -101,6 +103,7 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
 
                         //TODO 關閉last_text下面的recyclerView，開啟now_text下面的recycler_View，Adapter不要換，換裡面的data就好
 
+                        Log.d(TAG,"touch" + preferences.getString("home_electronic",""));
 
 //                        set_recycler_GONE();
 //                        last_recycler.setVisibility(View.GONE);
@@ -114,7 +117,7 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
 //                        }
 
 
-                        Log.d(TAG,"touch" + now_text.getTag().toString());
+
 
 //                        now_recyler.setAdapter(son_adapter);
 
@@ -137,8 +140,9 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
 //                            view.setVisibility(View.VISIBLE);
 //                        }
 //                    }
+                    Log.d(TAG,"touch" + preferences.getString("home_electronic",""));
                     preferences.edit().putString("home_electronic",now_text.getTag().toString()).apply();
-                    Log.d(TAG,"touch" + now_text.getTag().toString());
+
                 }
 
             }
