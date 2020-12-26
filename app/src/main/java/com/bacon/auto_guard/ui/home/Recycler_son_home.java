@@ -27,19 +27,23 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
     Context context;
     SharedPreferences preferences;
     Home_Data home_data;
+    String parent;
+    String touch;
 
-    public Recycler_son_home(Context context, ArrayList<Son_Data_format> myData) {
+    public Recycler_son_home(Context context, ArrayList<Son_Data_format> myData,String parent) {
         this.context = context;
         this.myData = myData;
         preferences = context.getSharedPreferences(context.getString(R.string.preference_name), 0);
 //        Log.d(TAG,"inin");
         home_data = new Home_Data();
-
+        this.parent = parent;
+        touch = preferences.getString("home_electronic", "");
     }
 
 
     public void notifyMyChanged(ArrayList<Son_Data_format> myData) {
         this.myData = myData;
+
         super.notifyDataSetChanged();
     }
 
@@ -131,14 +135,16 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
 
     @Override
     public int getItemCount() {
-        String a = preferences.getString("home_electronic", "null");
+
 //        Log.d(TAG,"data =  "+myData.get(0).getParent()+" , "+a);
         if (myData.size() == 0){
             return 0;
-        }else if (a.equals(myData.get(0).getParent()))
-            return myData.size();
+        }
+        if (!touch.equals(parent)){
+            return 0;
+        }
 
-        return 0;
+        return myData.size();
     }
 
     public abstract static class ViewHolder extends RecyclerView.ViewHolder {

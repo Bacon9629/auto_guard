@@ -26,21 +26,23 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
     ArrayList<String> parent_data;
     TextView last_text;
     RecyclerView last_recycler;
-    Recycler_son_home son_adapter;
+//    Recycler_son_home son_adapter;
     ArrayList<Son_Data_format> son_data;
     SharedPreferences preferences;
+    ArrayList<RecyclerView> recycler_list;
 
     public Recycler_parent_home(Context context, ArrayList<String> parent_data){
         this.context = context;
         this.parent_data = parent_data;
         this.son_data = new ArrayList<>();
         this.preferences = context.getSharedPreferences(context.getString(R.string.preference_name),0);
-        son_adapter = new Recycler_son_home(context,son_data);
+//        son_adapter = new Recycler_son_home(context,son_data);
+        recycler_list = new ArrayList<>();
     }
 
     public void putSon_data(ArrayList<Son_Data_format> son_data){
         this.son_data = son_data;
-        son_adapter.notifyMyChanged(son_data);
+//        son_adapter.notifyMyChanged(son_data);
         super.notifyDataSetChanged();
     }
 
@@ -57,13 +59,15 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
         holder.arrow_button.setTag(parent_data.get(position));
         holder.arrow_button.setOnClickListener(setClick(holder.arrow_button, holder.recycler_son));
 
+        holder.name.setTag(parent_data.get(position));
         holder.name.setText(parent_data.get(position));
         holder.name.setOnClickListener(setClick(holder.arrow_button, holder.recycler_son));
 
+        holder.recycler_son.setTag(parent_data.get(position));
         holder.recycler_son.setLayoutManager(new LinearLayoutManager(context));
-        holder.recycler_son.setAdapter(son_adapter);
+        holder.recycler_son.setAdapter(new Recycler_son_home(context,son_data,parent_data.get(position)));
 
-
+        recycler_list.add(position,holder.recycler_son);
 
     }
 
@@ -85,7 +89,8 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
 
                         preferences.edit().putString("home_electronic","").apply();
 
-                        now_recyler.setVisibility(View.GONE);
+//                        set_recycler_GONE();
+//                        now_recyler.setVisibility(View.GONE);
 
                         Log.d(TAG,"close");
 
@@ -97,9 +102,16 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
                         //TODO 關閉last_text下面的recyclerView，開啟now_text下面的recycler_View，Adapter不要換，換裡面的data就好
 
 
-                        last_recycler.setVisibility(View.GONE);
+//                        set_recycler_GONE();
+//                        last_recycler.setVisibility(View.GONE);
                         preferences.edit().putString("home_electronic",now_text.getTag().toString()).apply();
-                        now_recyler.setVisibility(View.VISIBLE);
+//                        recycler_list.get(position).setVisibility(View.VISIBLE);
+//                        now_recyler.setVisibility(View.VISIBLE);
+//                        for(RecyclerView view : recycler_list){
+//                            if (view.getTag() == parent){
+//                                view.setVisibility(View.VISIBLE);
+//                            }
+//                        }
 
 
                         Log.d(TAG,"touch" + now_text.getTag().toString());
@@ -117,9 +129,15 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
                     last_recycler = now_recyler;
                     now_text.setBackground(context.getDrawable(R.drawable.ic_arrow_up));
                     //TODO 開啟last_text or now_text下面的recyclerView，Adapter不要換，換裡面的data就好
-                    now_recyler.setVisibility(View.VISIBLE);
+//                    set_recycler_GONE();
+//                    recycler_list.get(position).setVisibility(View.VISIBLE);
+//                    now_recyler.setVisibility(View.VISIBLE);
+//                    for(RecyclerView view : recycler_list){
+//                        if (view.getTag() == parent){
+//                            view.setVisibility(View.VISIBLE);
+//                        }
+//                    }
                     preferences.edit().putString("home_electronic",now_text.getTag().toString()).apply();
-//                    now_recyler.setAdapter(son_adapter);
                     Log.d(TAG,"touch" + now_text.getTag().toString());
                 }
 

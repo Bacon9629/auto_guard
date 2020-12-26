@@ -50,6 +50,7 @@ public class HomeViewModel extends ViewModel {
         get_internet_data();
         handler = new Handler();
 
+
 //        lastTouch_listener();
 
         runUI = new Runnable() {
