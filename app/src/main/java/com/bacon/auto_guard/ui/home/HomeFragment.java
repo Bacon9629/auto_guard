@@ -55,9 +55,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 //TODO 這裡要從網路上抓parent name的資料
-                ArrayList<String> name_data = new ArrayList<>();
-                name_data.add("房間 1");
-                name_data.add("房間 2");
+//                ArrayList<String> name_data = new ArrayList<>();
+//                name_data.add("房間 1");
+//                name_data.add("房間 2");
 //        name_data.add("房間 3");
 
                 RecyclerView recycler_parent = root.findViewById(R.id.recycler_home_parent);

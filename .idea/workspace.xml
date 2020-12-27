@@ -21,20 +21,38 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Unnamed-0" />
   </component>
   <component name="BranchesTreeState">
-    <expand />
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
     <select>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ae463cc-e829-45b1-924e-68620b214e0a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Home_Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Home_Data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Recycler_parent_home.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Recycler_parent_home.java" afterDir="false" />
     </list>
-    <list id="1f55e8f3-4bd9-40ef-bbf1-cc01830c7701" name="123321" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +100,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_4_API_28_2" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-12-26T18:16:18.353Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-12-27T03:43:20.790Z" />
     <property name="ResourceManagerPrefKey.ResourceType" value="LAYOUT" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -165,7 +183,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="5ae463cc-e829-45b1-924e-68620b214e0a" name="Default Changelist" comment="" />
-      <changelist id="1f55e8f3-4bd9-40ef-bbf1-cc01830c7701" name="123321" comment="" />
+      <changelist id="" name="123321" comment="" />
       <created>1608298561144</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -325,7 +343,21 @@
       <option name="project" value="LOCAL" />
       <updated>1609005940946</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="成功DEBUG，終於可以開始寫ROBOT了">
+      <created>1609007205964</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1609007205964</updated>
+    </task>
+    <task id="LOCAL-00024" summary="成功DEBUG，終於可以開始寫ROBOT了">
+      <created>1609007243777</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1609007243777</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -341,7 +373,18 @@
             <State>
               <option name="CUSTOM_BOOLEAN_PROPERTIES">
                 <map>
-                  <entry key="Show.Git.Branches" value="false" />
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
                 </map>
               </option>
             </State>
@@ -375,7 +418,8 @@
     <MESSAGE value="NONONO" />
     <MESSAGE value="Revert &quot;temp_有BUGGG!!!!!!!!&quot;&#10;&#10;This reverts commit 500d8bbe" />
     <MESSAGE value="成功DE掉BUG了，但沒辦法收回" />
-    <option name="LAST_COMMIT_MESSAGE" value="成功DE掉BUG了，但沒辦法收回" />
+    <MESSAGE value="成功DEBUG，終於可以開始寫ROBOT了" />
+    <option name="LAST_COMMIT_MESSAGE" value="成功DEBUG，終於可以開始寫ROBOT了" />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1608519519368">
@@ -408,10 +452,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="828" y="284" width="327" height="426" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608518266347" />
-    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1609005938223">
+    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1609007242624">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609005938223" />
+    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007242624" />
     <state x="552" y="81" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1608747793300" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1609001874471">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -427,25 +471,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="452" y="203" key="Git.Interactive.Rebase.Dialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609001630321" />
-    <state width="1877" height="273" key="GridCell.Tab.0.bottom" timestamp="1609007127925">
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1609050320536">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="273" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007127925" />
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609050320536" />
     <state width="1876" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="273" key="GridCell.Tab.0.center" timestamp="1609007127925">
+    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1609050320536">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="273" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007127925" />
+    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609050320536" />
     <state width="1876" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="273" key="GridCell.Tab.0.left" timestamp="1609007127925">
+    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1609050320535">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="273" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007127925" />
+    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609050320535" />
     <state width="1876" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="273" key="GridCell.Tab.0.right" timestamp="1609007127925">
+    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1609050320536">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="273" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609007127925" />
+    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609050320536" />
     <state width="1876" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
     <state x="184" y="86" key="MergeDialog" timestamp="1609002204887">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -475,13 +519,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="656" y="362" key="edit.logcat.filter.dialog.dimensions/0.0.1920.1040@0.0.1920.1040" timestamp="1608522994847" />
+    <state x="662" y="265" key="refactoring.ChangeSignatureDialog" timestamp="1609043097305">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="662" y="265" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609043097305" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1608873061810">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608873061810" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608872329288">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1609042823361">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
+    <state x="-1297" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1609042823361" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608872329288" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608658800111" />
   </component>

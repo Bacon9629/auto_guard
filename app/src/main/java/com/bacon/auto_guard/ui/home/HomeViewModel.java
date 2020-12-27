@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bacon.auto_guard.R;
 import com.google.firebase.database.ChildEventListener;
@@ -39,6 +40,8 @@ public class HomeViewModel extends ViewModel {
 
     Handler handler;
     Runnable runUI;
+
+    Context context;
 
 
 
@@ -95,6 +98,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void putContext(Context context){
+        this.context = context;
         preferences = context.getSharedPreferences(context.getString(R.string.preference_name)
                 ,0);
         preferences.edit().putString("home_electronic","").apply();
@@ -127,7 +131,7 @@ public class HomeViewModel extends ViewModel {
 
         //TODO 必須把setValue放在UIThread
 
-        son_list.setValue(home_data.select_parent_getData(dataSnapshot,last_touch));
+        son_list.setValue(home_data.select_parent_getData(context,dataSnapshot,last_touch));
 
     }
 

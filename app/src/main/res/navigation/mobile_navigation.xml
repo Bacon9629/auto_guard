@@ -9,7 +9,7 @@
         android:id="@+id/navigation_robot"
         android:name="com.bacon.auto_guard.ui.robot.RobotFragment"
         android:label="@string/title_1"
-        tools:layout="@layout/fragment_layout_robot" >
+        tools:layout="@layout/fragment_robot" >
         <action
             android:id="@+id/action_navigation_robot_to_navigation_home"
             app:destination="@id/navigation_home" />

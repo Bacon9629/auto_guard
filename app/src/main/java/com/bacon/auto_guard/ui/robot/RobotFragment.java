@@ -22,7 +22,7 @@ public class RobotFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         robotViewModel =
                 new ViewModelProvider(this).get(RobotViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_layout_robot, container, false);
+        View root = inflater.inflate(R.layout.fragment_robot, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
         robotViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

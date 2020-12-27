@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bacon.auto_guard.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -51,6 +52,7 @@ class Home_Data {
 
                 }
                 parent_list.add("pass");
+                parent_list.add("pass");
                 // 這裡回傳資料
                 handler.post(next_step);
 
@@ -70,14 +72,19 @@ class Home_Data {
 
     }
 
-    public ArrayList<Son_Data_format> select_parent_getData(DataSnapshot snapshot, String parent){
+    public ArrayList<Son_Data_format> select_parent_getData(Context context, DataSnapshot snapshot, String parent){
         //資料整理，回傳相對應parent的DATA
         son_data.clear();
 //        Log.d(TAG,snapshot.child(parent).getChildren().iterator().next().getValue().toString());
-        for (DataSnapshot dataSnapshot : snapshot.child(parent).getChildren()) {
-            son_data.add(
-                    new Son_Data_format("default", parent, dataSnapshot.getKey(), dataSnapshot.getValue().toString()));
+        try {
+            for (DataSnapshot dataSnapshot : snapshot.child(parent).getChildren()) {
+                son_data.add(
+                        new Son_Data_format("default", parent, dataSnapshot.getKey(), dataSnapshot.getValue().toString()));
 //            Log.d(TAG,dataSnapshot.getKey());
+            }
+        }catch (NullPointerException e){
+           e.printStackTrace();
+           Toast.makeText(context,"取得資料錯誤，請重新開啟程式",Toast.LENGTH_LONG).show();
         }
         return son_data;
     }
