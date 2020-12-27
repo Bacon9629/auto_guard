@@ -73,8 +73,30 @@ public class RobotFragment extends Fragment {
         control_layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    switch (event.getAction()){
+                        case MotionEvent.ACTION_DOWN:
+                        case MotionEvent.ACTION_MOVE:
+                            db.child("control").child("direction").setValue(convert.convert(event.getX(),event.getY()));
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            db.child("control").child("direction").setValue("000")
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            e.printStackTrace();
+                                            Toast.makeText(context,"上傳錯誤",Toast.LENGTH_LONG).show();
+                                            control_layout.callOnClick();
+                                        }
+                                    });
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(context,"上傳錯誤",Toast.LENGTH_LONG).show();
+                    control_layout.callOnClick();
+                }
 
-                db.child("control").child("direction").setValue(convert.convert(event.getX(),event.getY()));
+
 
 //                Log.d(TAG,convert.convert(event.getX(),event.getY()));
 //                Log.d(TAG,"a="+convert.check_a()+" b="+convert.check_b()+" c="+convert.check_c()+" d="+convert.check_d());
@@ -132,7 +154,16 @@ public class RobotFragment extends Fragment {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(context, "上傳切換失敗，請檢察網路", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
+                                setAuto(auto);
+                            }
+                        });
+                db.child("control").child("direction").setValue("000")
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
                                 setAuto(auto);
                             }
                         });
@@ -142,14 +173,14 @@ public class RobotFragment extends Fragment {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(context, "上傳切換失敗，請檢察網路", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
                                 setAuto(auto);
                             }
                         });
             }
         } catch (Exception e){
             e.printStackTrace();
-            Toast.makeText(context, "上傳切換失敗，請檢察網路", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
             setAuto(auto);
         }
     }
