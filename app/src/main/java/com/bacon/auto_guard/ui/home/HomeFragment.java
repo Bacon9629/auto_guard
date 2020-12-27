@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
         };
 
 
-        home_data.download_parent_data(handler,runnable);
+        home_data.download_parent_data(context,handler,runnable);
 
 
         return root;

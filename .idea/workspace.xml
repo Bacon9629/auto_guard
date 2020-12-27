@@ -37,6 +37,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ae463cc-e829-45b1-924e-68620b214e0a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/Robot_Data.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/content_right.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/control_back.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/control_front.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/control_front_left.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/control_front_right.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/control_left.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/input_name.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/fileHashes/fileHashes.bin" afterDir="false" />
@@ -47,9 +55,15 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Recycler_parent_home.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Recycler_parent_home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Home_Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Home_Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Recycler_son_home.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Recycler_son_home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_robot.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_robot.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,9 +91,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="layoutResourceFile" />
         <option value="resourceFile" />
         <option value="Class" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -362,7 +376,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609052702264</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="已修正 - 多一點parent就會出現BUG">
+      <created>1609053180470</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1609053180470</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -400,7 +421,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="first" />
     <MESSAGE value="home已經可以顯示recycler_parent，還不知道要用甚麼資料的格式" />
     <MESSAGE value="home的recycler_parent已經OK，recycler_son還沒，資料格式也還沒定" />
     <MESSAGE value="休息一下" />
@@ -425,18 +445,23 @@
     <MESSAGE value="成功DE掉BUG了，但沒辦法收回" />
     <MESSAGE value="成功DEBUG，終於可以開始寫ROBOT了" />
     <MESSAGE value="新增更新系統，只要多一點parent就會出現BUG" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增更新系統，只要多一點parent就會出現BUG" />
+    <MESSAGE value="已修正 - 多一點parent就會出現BUG" />
+    <option name="LAST_COMMIT_MESSAGE" value="已修正 - 多一點parent就會出現BUG" />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1608519519368">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="586" y="198" key="#Inspections/0.0.1920.1040@0.0.1920.1040" timestamp="1608519519368" />
-    <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser" timestamp="1608896949876">
+    <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser" timestamp="1609062434995">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608896949876" />
+    <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609062434995" />
     <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1608517759764" />
+    <state x="689" y="309" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1609071707188">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="689" y="309" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609071707188" />
     <state x="401" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1608304854064">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -445,23 +470,24 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608397904568" />
-    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1609003262321">
+    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1609070937431">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609003262321" />
+    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609070937431" />
     <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1608744159019" />
-    <state x="540" y="275" key="AndroidCreateResourceFileDialog" timestamp="1608430537325">
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog" timestamp="1609076455477">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="540" y="275" key="AndroidCreateResourceFileDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609076455477" />
     <state x="540" y="275" key="AndroidCreateResourceFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608430537325" />
     <state x="828" y="284" width="327" height="426" key="AndroidCreateXmlResourceDialog" timestamp="1608518266347">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="828" y="284" width="327" height="426" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608518266347" />
-    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1609052698920">
+    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1609053178274">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609052698920" />
+    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609053178274" />
     <state x="552" y="81" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1608747793300" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1609001874471">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -477,25 +503,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="452" y="203" key="Git.Interactive.Rebase.Dialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609001630321" />
-    <state width="0" height="0" key="GridCell.Tab.0.bottom" timestamp="1609052823087">
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1609079943812">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="0" height="0" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609052823087" />
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609079943812" />
     <state width="1876" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="0" height="0" key="GridCell.Tab.0.center" timestamp="1609052823087">
+    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1609079943811">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="0" height="0" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609052823087" />
+    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609079943811" />
     <state width="1876" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="0" height="0" key="GridCell.Tab.0.left" timestamp="1609052823087">
+    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1609079943811">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="0" height="0" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609052823087" />
+    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609079943811" />
     <state width="1876" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="0" height="0" key="GridCell.Tab.0.right" timestamp="1609052823087">
+    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1609079943812">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="0" height="0" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609052823087" />
+    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609079943812" />
     <state width="1876" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
     <state x="184" y="86" key="MergeDialog" timestamp="1609002204887">
       <screen x="0" y="0" width="1920" height="1040" />

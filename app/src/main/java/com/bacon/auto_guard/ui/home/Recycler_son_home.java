@@ -81,7 +81,7 @@ class Recycler_son_home extends RecyclerView.Adapter<Recycler_son_home.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        if (holder.returnType() == 0) {
+        if (holder.returnType() == 0 && myData.get(position).getParent().equals(parent)) {
             ViewHolder_Other other = (ViewHolder_Other) holder;
             //TODO 這裡寫other的內容
 

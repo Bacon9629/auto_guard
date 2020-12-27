@@ -4,14 +4,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         checkVersion();
 
+        inputName();
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -51,6 +59,88 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
+
+    }
+
+    private void inputName() {
+        SharedPreferences preferences = getSharedPreferences("activity",0);
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference("user");
+
+        if (!preferences.getString("name","-1").equals("-1"))
+            return;
+
+        View v = LayoutInflater.from(context).inflate(R.layout.input_name,null,false);
+        EditText editText = v.findViewById(R.id.editTextTextPersonName);
+        new AlertDialog.Builder(context).setTitle("輸入我的名子").setView(v).setCancelable(false)
+                .setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        db.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                String name = editText.getEditableText().toString();
+
+                                if (name.equals("") || name.equals(" ")){
+                                    Toast.makeText(context,"輸入錯誤",Toast.LENGTH_SHORT).show();
+                                    inputName();
+                                    return;
+                                }
+
+                                if (task.getResult().hasChild(name)){
+
+                                    //名子跟網路資料庫重複
+
+                                    new AlertDialog.Builder(context).setTitle("你是 "+name+" 嗎?")
+                                            .setMessage("這個名子已經登記過了?\n若是同時有兩個同樣名稱的裝置在線上，可能會遭成不可回的錯誤!!")
+                                            .setPositiveButton("我就是要用", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    preferences.edit().putString("name",name).apply();
+                                                    Toast.makeText(context,name+" 你好!",Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .setNegativeButton("重新輸入", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    inputName();
+                                                }
+                                            })
+                                            .setCancelable(false).show();
+//                                    Toast.makeText(context,"這個名子已經重複過了，請輸入其他名稱!!!",Toast.LENGTH_LONG).show();
+//                                    inputName();
+                                }else{
+
+                                    //名子OK，上傳ING
+
+                                    try {
+                                        db.child(name).setValue("name")
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        Toast.makeText(context,name+" 你好!",Toast.LENGTH_SHORT).show();
+                                                        preferences.edit().putString("name",name).apply();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        e.printStackTrace();
+                                                        Toast.makeText(context,"網路有點問題，請確認網路狀態",Toast.LENGTH_LONG).show();
+                                                        inputName();
+                                                    }
+                                                });
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                        Toast.makeText(context,"網路有問題，請確認網路狀態",Toast.LENGTH_LONG).show();
+                                        inputName();
+                                    }
+
+                                }
+                            }
+                        });
+                    }
+                }).show();
 
     }
 
@@ -67,8 +157,16 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String myVersion = pkgInfo.versionName;
+                String unChange_latest;
+                try {
+                    unChange_latest = task.getResult().child("latest").getValue().toString();
+                }catch (Exception e){
+                    e.printStackTrace();
+//                    Toast.makeText(context,"版本取得錯誤  "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    checkVersion();
+                    return;
+                }
 
-                String unChange_latest = task.getResult().child("latest").getValue().toString();
                 String latest = replace(unChange_latest);
 
                 if (!latest.equals(myVersion)){

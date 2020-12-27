@@ -38,7 +38,7 @@ class Home_Data {
         internet_db = database.getReference("home").child("electronic");
     }
 
-    public void download_parent_data(Handler handler, Runnable next_step){
+    public void download_parent_data(Context context,Handler handler, Runnable next_step){
         //只有呼叫下載而已，下載完成之後呼叫runnable，必須要在runnable裡面執行getParent_list
 
         parent_list = new ArrayList<>();
@@ -46,10 +46,16 @@ class Home_Data {
         internet_db.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                for (DataSnapshot snapshot : Objects.requireNonNull(task.getResult()).getChildren()) {
+                try {
+                    for (DataSnapshot snapshot : Objects.requireNonNull(task.getResult()).getChildren()) {
 
-                    parent_list.add(snapshot.getKey());
+                        parent_list.add(snapshot.getKey());
 
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(context,"下載資料失敗，請檢察網路有無開啟",Toast.LENGTH_SHORT).show();
+                    download_parent_data(context,handler,next_step);
                 }
                 parent_list.add("pass");
                 parent_list.add("pass");
