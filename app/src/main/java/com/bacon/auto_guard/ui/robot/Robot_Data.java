@@ -49,8 +49,6 @@ class Robot_Data {
             }
         };
     }
-
-
 //    public void setAuto(boolean auto){
 //        try {
 //            if (auto) {

@@ -42,6 +42,7 @@ public class RobotFragment extends Fragment {
     private Context context;
     private Robot_Data robot_data;
     private String name;
+    private X_Y_Convert convert;
 
     ConstraintLayout control_layout;
     ToggleButton auto_switch;
@@ -54,6 +55,7 @@ public class RobotFragment extends Fragment {
 
         context = getActivity();
         db = FirebaseDatabase.getInstance().getReference("robot");
+        convert = new X_Y_Convert();
 
         robot_data = new Robot_Data(context);
         TextView control_name = root.findViewById(R.id.control_name);
@@ -62,53 +64,29 @@ public class RobotFragment extends Fragment {
 
         control_layout = root.findViewById(R.id.control_arrow_layout);
 
-        boolean[] direction = {false,false};
+        int[] direction = {0,0,0};
         Log.d(TAG,control_layout.getMinHeight()+"  "+control_layout.getMaxHeight()+"");
 
 
-        // X=245，Y=230
+        // X=248，Y=230
 
         control_layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:{
-                        Log.d(TAG,"down");
-                        break;
-                    }
+                db.child("control").child("direction").setValue(convert.convert(event.getX(),event.getY()));
 
-                    case MotionEvent.ACTION_MOVE:{
-                        Log.d(TAG,"X = "+event.getX()+" Y = "+event.getY());
-                        break;
-                    }
-
-                    case MotionEvent.ACTION_UP:{
-                        Log.d(TAG,"up");
-                    }
-
-
-
-                }
-
-
-
+//                Log.d(TAG,convert.convert(event.getX(),event.getY()));
+//                Log.d(TAG,"a="+convert.check_a()+" b="+convert.check_b()+" c="+convert.check_c()+" d="+convert.check_d());
                 return false;
             }
 
         });
 
-
-
-
-
-
         auto_switch = root.findViewById(R.id.control_auto_switch);
 
         setAuto_switch(auto_switch);
 //        ensure_AutoSwitch_status(auto_switch);
-
-
 
 
         robotViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
