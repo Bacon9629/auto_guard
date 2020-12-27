@@ -57,7 +57,7 @@ public class Recycler_parent_home extends RecyclerView.Adapter<Recycler_parent_h
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-
+        holder.constraint.setVisibility(View.VISIBLE);
 
         holder.arrow_button.setTag(parent_data.get(position));
         holder.arrow_button.setOnClickListener(setClick(holder.arrow_button, holder.recycler_son));
