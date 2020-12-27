@@ -57,8 +57,8 @@ class Home_Data {
                     Toast.makeText(context,"下載資料失敗，請檢察網路有無開啟",Toast.LENGTH_SHORT).show();
                     download_parent_data(context,handler,next_step);
                 }
-                parent_list.add("pass");
-                parent_list.add("pass");
+//                parent_list.add("pass");
+//                parent_list.add("pass");
                 // 這裡回傳資料
                 handler.post(next_step);
 

@@ -36,16 +36,11 @@ class Robot_Data {
         };
     }
 
-    public ValueEventListener check_internet_Auto(ToggleButton button){
+    public ValueEventListener check_internet_Auto(ToggleButton button,String name){
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue().equals("auto")){
-                    button.setChecked(true);
-                } else{
-                    button.setChecked(false);
-                }
-
+                button.setChecked(!snapshot.getValue().equals(name));
             }
 
             @Override

@@ -53,7 +53,6 @@ public class RobotFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_robot, container, false);
 
         context = getActivity();
-
         db = FirebaseDatabase.getInstance().getReference("robot");
 
         robot_data = new Robot_Data(context);
@@ -62,8 +61,12 @@ public class RobotFragment extends Fragment {
         control_name.setText(name);
 
         control_layout = root.findViewById(R.id.control_arrow_layout);
+
         boolean[] direction = {false,false};
         Log.d(TAG,control_layout.getMinHeight()+"  "+control_layout.getMaxHeight()+"");
+
+
+        // X=245，Y=230
 
         control_layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -96,10 +99,14 @@ public class RobotFragment extends Fragment {
         });
 
 
+
+
+
+
         auto_switch = root.findViewById(R.id.control_auto_switch);
 
         setAuto_switch(auto_switch);
-        ensure_AutoSwitch_status(auto_switch);
+//        ensure_AutoSwitch_status(auto_switch);
 
 
 
@@ -113,28 +120,16 @@ public class RobotFragment extends Fragment {
         return root;
     }
 
-    private void ensure_AutoSwitch_status(ToggleButton auto_switch) {
-
-        db.child("control_by").addValueEventListener(robot_data.ensure_AutoSwitch_status(auto_switch,name));
-
-    }
+//    private void ensure_AutoSwitch_status(ToggleButton auto_switch) {
+//
+//        db.child("control_by").addValueEventListener(robot_data.ensure_AutoSwitch_status(auto_switch,name));
+//
+//    }
 
     private void setAuto_switch(ToggleButton auto_switch) {
-        try {
-            db.child("control_by").setValue(name)
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            e.printStackTrace();
-                            Toast.makeText(context,"網路有點問題，請確認網路狀態",Toast.LENGTH_LONG).show();
 
-                        }
-                    });
-        } catch (Exception e){
-            Toast.makeText(context,"網路有點問題，請確認網路狀態",Toast.LENGTH_LONG).show();
-        }
 
-        db.child("mode").addValueEventListener(robot_data.check_internet_Auto(auto_switch));
+        db.child("control_by").addValueEventListener(robot_data.check_internet_Auto(auto_switch,name));
 
 
         auto_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -181,4 +176,25 @@ public class RobotFragment extends Fragment {
         }
     }
 
+    private void set_auto_ON(){
+        auto_switch.setChecked(true);
+    }
+
+    @Override
+    public void onPause() {
+        set_auto_ON();
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        set_auto_ON();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        set_auto_ON();
+        super.onDestroy();
+    }
 }
