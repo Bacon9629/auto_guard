@@ -44,16 +44,16 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_4_API_28_2]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -178,7 +178,6 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="5ae463cc-e829-45b1-924e-68620b214e0a" name="Default Changelist" comment="" />
-      <changelist id="" name="123321" comment="" />
       <created>1608298561144</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -387,7 +386,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609093897470</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="robot的speed還沒做">
+      <created>1609094864113</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1609094864113</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -425,7 +431,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="休息一下" />
     <MESSAGE value="可以顯示那些房間要用甚麼adapter，但還有BUG，只能顯示電燈5?&#10;在son_adapter裡面可以用引數取代SharePreference" />
     <MESSAGE value="Recycler_son_home的開關按鈕的監聽還沒做" />
     <MESSAGE value="Recycler_son_home的開關按鈕的監聽還沒做&#10;成功跟網路資料庫連結，但處理資料沒有用副執行續，速度較慢" />
@@ -450,7 +455,8 @@
     <MESSAGE value="已修正 - 多一點parent就會出現BUG" />
     <MESSAGE value="robot的UI已經設定OK，只剩下控制方向和速度" />
     <MESSAGE value="robot的方向設定好了耶耶耶耶耶耶耶" />
-    <option name="LAST_COMMIT_MESSAGE" value="robot的方向設定好了耶耶耶耶耶耶耶" />
+    <MESSAGE value="robot的speed還沒做" />
+    <option name="LAST_COMMIT_MESSAGE" value="robot的speed還沒做" />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1608519519368">
@@ -488,10 +494,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="828" y="284" width="327" height="426" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608518266347" />
-    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1609093895456">
+    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1609094862404">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609093895456" />
+    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094862404" />
     <state x="552" y="81" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1608747793300" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1609001874471">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -507,25 +513,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="452" y="203" key="Git.Interactive.Rebase.Dialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609001630321" />
-    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1609094292987">
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1609094874238">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094292987" />
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094874238" />
     <state width="1876" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1609094292987">
+    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1609094874238">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094292987" />
+    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094874238" />
     <state width="1876" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1609094292987">
+    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1609094874237">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094292987" />
+    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094874237" />
     <state width="1876" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1609094292987">
+    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1609094874238">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094292987" />
+    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609094874238" />
     <state width="1876" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
     <state x="184" y="86" key="MergeDialog" timestamp="1609002204887">
       <screen x="0" y="0" width="1920" height="1040" />
