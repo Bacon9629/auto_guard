@@ -1,39 +1,52 @@
 package com.bacon.auto_guard.ui.robot;
 
 class X_Y_Convert {
-    private float x,y;
-    public String convert(float x, float y){
+    private int x,y;
+    public String convert(int x, int y){
         this.x = x;
         this.y = y;
 
         if (circle())
-            return "000";
+            return "0";
         else if (check_A())
-            return "100";
+            return "2";
         else if (check_B())
-            return "110";
+            return "5";
         else if (check_C())
-            return "010";
+            return "1";
         else if (check_D())
-            return "011";
+            return "6";
         else if (check_E())
-            return "001";
+            return "3";
         else if (check_F())
-            return "111";
+            return "4";
         else
             return "000";
     }
 
+    public int get_speed(int x, int y){
+        this.x = x;
+        this.y = y;
+
+        if (circle())
+            return 0;
+
+        int h = 248,k = 230;
+        int a = (x-h)*(x-h);
+        int b = (y-k)*(y-k);
+        int r2 = 70*70;
+        return (int)Math.sqrt((a+b)-r2);
+
+    }
+
     private boolean circle(){
         //若是不符合，回傳true
-        
-        float h = 248,k = 230;
-        float a = (x-h)*(x-h);
-        float b = (y-k)*(y-k);
-        float r2 = 120*120;
+        int h = 248,k = 230;
+        int a = (x-h)*(x-h);
+        int b = (y-k)*(y-k);
+        int r2 = 70*70;
         
         return a+b < r2;
-        
     }
 
     private boolean check_A(){

@@ -123,6 +123,7 @@
         android:id="@+id/control_auto_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:checked="true"
         android:textOff="auto"
         android:textOn="auto"
@@ -134,8 +135,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/control_auto_switch"
-        app:layout_constraintEnd_toStartOf="@+id/control_auto_switch"
-        app:layout_constraintTop_toTopOf="@+id/control_auto_switch" />
+        app:layout_constraintEnd_toEndOf="@+id/control_auto_switch"
+        app:layout_constraintStart_toStartOf="@+id/control_auto_switch"
+        app:layout_constraintTop_toBottomOf="@+id/control_auto_switch" />
+
+    <TextView
+        android:id="@+id/speed_moniter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

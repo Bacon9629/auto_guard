@@ -43,9 +43,11 @@ public class RobotFragment extends Fragment {
     private Robot_Data robot_data;
     private String name;
     private X_Y_Convert convert;
+    private final String temp = "";
 
     ConstraintLayout control_layout;
     ToggleButton auto_switch;
+    TextView monitor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,19 +58,24 @@ public class RobotFragment extends Fragment {
         context = getActivity();
         db = FirebaseDatabase.getInstance().getReference("robot");
         convert = new X_Y_Convert();
-
         robot_data = new Robot_Data(context);
+
         TextView control_name = root.findViewById(R.id.control_name);
         name = context.getSharedPreferences("activity",0).getString("name","無名氏");
         control_name.setText(name);
 
+
         control_layout = root.findViewById(R.id.control_arrow_layout);
 
-        int[] direction = {0,0,0};
         Log.d(TAG,control_layout.getMinHeight()+"  "+control_layout.getMaxHeight()+"");
 
+        //Speed_monitor
 
-        // X=248，Y=230
+        monitor = root.findViewById(R.id.speed_moniter);
+
+        //end
+
+
 
         control_layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -77,10 +84,24 @@ public class RobotFragment extends Fragment {
                     switch (event.getAction()){
                         case MotionEvent.ACTION_DOWN:
                         case MotionEvent.ACTION_MOVE:
-                            db.child("control").child("direction").setValue(convert.convert(event.getX(),event.getY()));
+                            int x = (int)event.getX();
+                            int y = (int)event.getY();
+                            db.child("control").child("direction").setValue(convert.convert(x,y));
+                            db.child("control").child("speed").setValue(convert.get_speed(x,y));
+                            monitor.setText("speed: "+convert.get_speed(x,y));
                             break;
                         case MotionEvent.ACTION_UP:
-                            db.child("control").child("direction").setValue("000")
+                            db.child("control").child("speed").setValue(0)
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            e.printStackTrace();
+                                            Toast.makeText(context,"上傳錯誤",Toast.LENGTH_LONG).show();
+                                            control_layout.callOnClick();
+                                        }
+                                    });
+
+                            db.child("control").child("direction").setValue("0")
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
@@ -119,6 +140,7 @@ public class RobotFragment extends Fragment {
         });
         return root;
     }
+
 
 //    private void ensure_AutoSwitch_status(ToggleButton auto_switch) {
 //
