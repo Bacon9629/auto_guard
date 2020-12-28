@@ -1,6 +1,7 @@
 package com.bacon.auto_guard.ui.robot;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -44,10 +46,14 @@ public class RobotFragment extends Fragment {
     private String name;
     private X_Y_Convert convert;
     private final String temp = "";
+    private boolean flag_no_one_use = false;
+    private String internet_now_use = "";
+    private final float[] control_spot_origin_position = new float[2];
 
     ConstraintLayout control_layout;
-    ToggleButton auto_switch;
-    TextView monitor;
+    ToggleButton hand_switch;
+    ImageView touch_spot;
+    TextView control_name;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,23 +66,35 @@ public class RobotFragment extends Fragment {
         convert = new X_Y_Convert();
         robot_data = new Robot_Data(context);
 
-        TextView control_name = root.findViewById(R.id.control_name);
+        control_layout = root.findViewById(R.id.control_arrow_layout);
+        touch_spot = root.findViewById(R.id.control_touch_spot);
+        control_name = root.findViewById(R.id.control_name);
         name = context.getSharedPreferences("activity",0).getString("name","無名氏");
         control_name.setText(name);
 
 
-        control_layout = root.findViewById(R.id.control_arrow_layout);
+        control_spot_origin_position[0] = (float) 195;
+        control_spot_origin_position[1] = (float) 170;
 
-        Log.d(TAG,control_layout.getMinHeight()+"  "+control_layout.getMaxHeight()+"");
+
+
+//        Log.d(TAG,control_layout.getMinHeight()+"  "+control_layout.getMaxHeight()+"");
 
         //Speed_monitor
 
-        monitor = root.findViewById(R.id.speed_moniter);
-
         //end
 
+        set_control_keyboard(control_layout);
 
+        hand_switch = root.findViewById(R.id.control_hand_switch);
 
+        sethand_switch(hand_switch);
+//        ensure_AutoSwitch_status(hand_switch);
+
+        return root;
+    }
+
+    private void set_control_keyboard(ConstraintLayout control_layout) {
         control_layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -88,9 +106,11 @@ public class RobotFragment extends Fragment {
                             int y = (int)event.getY();
                             db.child("control").child("direction").setValue(convert.convert(x,y));
                             db.child("control").child("speed").setValue(convert.get_speed(x,y));
-                            monitor.setText("speed: "+convert.get_speed(x,y));
+                            set_touch_spot(event.getX(),event.getY());
+
                             break;
                         case MotionEvent.ACTION_UP:
+                            set_touch_spot(control_spot_origin_position[0]+53,control_spot_origin_position[1]+60);
                             db.child("control").child("speed").setValue(0)
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -124,69 +144,105 @@ public class RobotFragment extends Fragment {
                 return false;
             }
 
+
+
         });
+    }
 
-        auto_switch = root.findViewById(R.id.control_auto_switch);
+    private void set_touch_spot(float x, float y) {
 
-        setAuto_switch(auto_switch);
-//        ensure_AutoSwitch_status(auto_switch);
+        touch_spot.setX(x-53);
+        touch_spot.setY(y-60);
 
-
-        robotViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-            }
-        });
-        return root;
     }
 
 
-//    private void ensure_AutoSwitch_status(ToggleButton auto_switch) {
+//    private void ensure_AutoSwitch_status(ToggleButton hand_switch) {
 //
-//        db.child("control_by").addValueEventListener(robot_data.ensure_AutoSwitch_status(auto_switch,name));
+//        db.child("control_by").addValueEventListener(robot_data.ensure_AutoSwitch_status(hand_switch,name));
 //
 //    }
 
-    private void setAuto_switch(ToggleButton auto_switch) {
+    private void sethand_switch(ToggleButton hand_switch) {
+
+        String temp = "my name  : "+name+"\ncontrol by : ";
+        db.child("control_by").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                internet_now_use = snapshot.getValue().toString();
+                control_name.setText(String.format("%s%s", temp, internet_now_use));
+
+                if (internet_now_use.equals("NO_ONE")){
+                    flag_no_one_use = true;
+                }
+                if (internet_now_use.equals(name)){
+                    control_layout.setVisibility(View.VISIBLE);
+                }else{
+                    control_layout.setVisibility(View.GONE);
+                    flag_no_one_use = false;
+                }
+
+                hand_switch.setChecked(snapshot.getValue().equals(name));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
-        db.child("control_by").addValueEventListener(robot_data.check_internet_Auto(auto_switch,name));
-
-
-        auto_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        hand_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setAuto(isChecked);
 
-                if (isChecked){
-                    control_layout.setVisibility(View.GONE);
-                }else{
-                    control_layout.setVisibility(View.VISIBLE);
+//                Log.d(TAG,internet_now_use);
+
+                if (isChecked && internet_now_use.equals("NO_ONE")) {
+                    setHand(true);
+                }else if(isChecked && !internet_now_use.equals("NO_ONE")){
+                    Toast.makeText(context,internet_now_use + " 正在使用中，請等他離開",Toast.LENGTH_SHORT).show();
+                    buttonView.setChecked(false);
+                }else if (!isChecked && internet_now_use.equals(name)){
+                    setHand(false);
                 }
+
             }
         });
     }
 
-    public void setAuto(boolean auto){
+//    private boolean get_internet_now_use_equals_name(){
+//        return internet_now_use.equals("NO_ONE");
+//    }
+
+    public void setHand(boolean hand){
         try {
-            if (auto) {
+            if (!hand) {
                 db.child("control_by").setValue("NO_ONE")
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
-                                setAuto(auto);
+                                setHand(hand);
                             }
                         });
-                db.child("control").child("direction").setValue("000")
+                db.child("control").child("direction").setValue("0")
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
-                                setAuto(auto);
+                                setHand(hand);
+                            }
+                        });
+                db.child("control").child("speed").setValue(0)
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
+                                setHand(hand);
                             }
                         });
             } else {
@@ -196,36 +252,33 @@ public class RobotFragment extends Fragment {
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
-                                setAuto(auto);
+                                setHand(hand);
                             }
                         });
             }
         } catch (Exception e){
             e.printStackTrace();
             Toast.makeText(context, "上傳切換手自動失敗，請檢察網路", Toast.LENGTH_SHORT).show();
-            setAuto(auto);
+            setHand(hand);
         }
     }
 
-    private void set_auto_ON(){
-        auto_switch.setChecked(true);
-    }
 
     @Override
     public void onPause() {
-        set_auto_ON();
+        hand_switch.setChecked(false);
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        set_auto_ON();
+        hand_switch.setChecked(false);
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
-        set_auto_ON();
+        hand_switch.setChecked(false);
         super.onDestroy();
     }
 }

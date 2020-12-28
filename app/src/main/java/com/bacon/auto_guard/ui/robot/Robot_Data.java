@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 class Robot_Data {
     DatabaseReference db = FirebaseDatabase.getInstance().getReference("robot");
 
+    boolean someone_use_now = false;
+
     Context context;
 
     public Robot_Data(Context context){
