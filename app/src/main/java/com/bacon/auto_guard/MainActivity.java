@@ -1,4 +1,4 @@
- package com.bacon.auto_guard;
+package com.bacon.auto_guard;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,10 +23,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void inputName() {
         SharedPreferences preferences = getSharedPreferences("activity", 0);
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference("user");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         if (!preferences.getString("name", "-1").equals("-1"))
             return;
@@ -77,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
                         dialog.cancel();
                         try {
 
-
-                            db.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            db.collection("user1").document("user")
+                                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     String name = editText.getEditableText().toString();
 
                                     if (name.equals("") || name.equals(" ")) {
@@ -89,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                                         return;
                                     }
 
-                                    if (task.getResult().hasChild(name)) {
+                                    if (Objects.requireNonNull(task.getResult()).contains(name)) {
 
                                         //名子跟網路資料庫重複
 
@@ -116,7 +124,9 @@ public class MainActivity extends AppCompatActivity {
                                         //名子OK，上傳ING
 
                                         try {
-                                            db.child(name).setValue("name")
+                                            Map<String, Object> temp = new HashMap<>();
+                                            temp.put(name, "name");
+                                            db.collection("user1").document("user").update(temp)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
@@ -132,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                                                             inputName();
                                                         }
                                                     });
+
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             Toast.makeText(context, "網路有問題，請確認網路狀態", Toast.LENGTH_LONG).show();
@@ -141,100 +152,122 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(context,"網路連線錯誤",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "網路連線錯誤", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).show();
 
     }
 
-    private void checkVersion() {
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("version");
-        db.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
+    private HashMap<String, Object> get_version_content(QuerySnapshot task, String version){
+        List<DocumentSnapshot> lists = task.getDocuments();
+        HashMap<String, Object> maps = new HashMap<>();
 
-                PackageInfo pkgInfo = null;
-                try {
-                    pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-                String myVersion = pkgInfo.versionName;
-                String unChange_latest;
-                try {
-                    unChange_latest = task.getResult().child("latest").getValue().toString();
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                    Toast.makeText(context,"版本取得錯誤  "+e.getMessage(),Toast.LENGTH_SHORT).show();
-                    checkVersion();
-                    return;
-                }
+        for(DocumentSnapshot item : lists){
+            if(item.getId().equals(version)){
+                maps.put("important", item.get("important"));
+                maps.put("uri", item.get("uri"));
 
-                String latest = replace(unChange_latest);
-
-                if (!latest.equals(myVersion)) {
-                    StringBuilder builder = new StringBuilder();
-                    AlertDialog.Builder alert_builder = new AlertDialog.Builder(context);
-
-                    boolean important = task.getResult().child(unChange_latest).child("important").getValue().toString().equals("true");
-//                    Log.d("ContentValues",task.getResult().child(unChange_latest).child("important").getValue().toString());
-
-                    builder.append("最新版本 : ").append(latest).append("\t\t\t當前版本 : ").append(myVersion).append("\n\n");
-                    for (int i = 0; task.getResult().child(unChange_latest).hasChild("description" + i); i++) {
-                        char a = 248;
-                        builder.append(a).append("\t\t");
-                        builder.append(task.getResult().child(unChange_latest).child("description" + i).getValue());
-                        builder.append("\n");
+                for(int i=0;i<30;i++){
+                    if (item.contains("description" + i)){
+                        maps.put("description" + i, item.get("description" + i));
+                    }else{
+                        break;
                     }
-
-                    if (important) {
-                        builder.append('\n');
-                        builder.append("=====此為重大更新、不可以跳過=====").append('\n');
-                    } else {
-                        alert_builder.setNegativeButton("下次再說", null);
-                    }
-
-
-                    alert_builder.setTitle("檢查更新").setMessage(builder.toString())
-                            .setCancelable(false)
-                            .setPositiveButton("前往更新", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    try {
-                                        Uri uri = Uri.parse(task.getResult()
-                                                .child(unChange_latest).child("uri").getValue().toString());
-
-                                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                        startActivity(intent);
-
-                                        if (important) {
-                                            checkVersion();
-                                        }
-
-
-                                    } catch (NullPointerException e) {
-                                        alert_builder.setMessage("取得資料失敗...")
-                                                .setNegativeButton("取消", null)
-                                                .show();
-                                    }
-                                }
-                            });
-
-                    alert_builder.show();
-
-
                 }
-
+                break;
             }
-        });
+        }
+
+        return maps;
 
     }
 
-    private String replace(String str) {
-        return str.replace("*", ".");
+    private String get_latest_version(QuerySnapshot task){
+        List<DocumentSnapshot> lists = task.getDocuments();
+        for(DocumentSnapshot item : lists){
+            if(item.getId().equals("latest")){
+                return item.get("latest").toString();
+            }
+        }
+        return null;
+    }
+
+    private void checkVersion() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("version").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> taskk) {
+                        PackageInfo pkgInfo = null;
+
+                        String latest = get_latest_version(taskk.getResult());
+                        HashMap<String, Object> version_content = get_version_content(taskk.getResult(), latest);
+
+                        try {
+                            pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                        } catch (PackageManager.NameNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        String myVersion = pkgInfo.versionName;
+
+                        if (!latest.equals(myVersion)) {
+                            StringBuilder builder = new StringBuilder();
+                            AlertDialog.Builder alert_builder = new AlertDialog.Builder(context);
+
+                            boolean important = version_content.get("important").toString().equals("true");
+//                    Log.d("ContentValues",task.getResult().child(unChange_latest).child("important").getValue().toString());
+
+                            builder.append("最新版本 : ").append(latest).append("\t\t\t當前版本 : ").append(myVersion).append("\n\n");
+                            for (int i = 0; version_content.containsKey("description"+i); i++) {
+                                char a = 248;
+                                builder.append(a).append("\t\t");
+                                builder.append(version_content.get("description" + i).toString());
+                                builder.append("\n");
+                            }
+
+                            if (important) {
+                                builder.append('\n');
+                                builder.append("=====此為重大更新、不可以跳過=====").append('\n');
+                            } else {
+                                alert_builder.setNegativeButton("下次再說", null);
+                            }
+
+
+                            alert_builder.setTitle("檢查更新").setMessage(builder.toString())
+                                    .setCancelable(false)
+                                    .setPositiveButton("前往更新", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            try {
+                                                Uri uri = Uri.parse(version_content.get("uri").toString());
+
+                                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                                startActivity(intent);
+
+                                                if (important) {
+                                                    checkVersion();
+                                                }
+
+
+                                            } catch (NullPointerException e) {
+                                                alert_builder.setMessage("取得資料失敗...")
+                                                        .setNegativeButton("取消", null)
+                                                        .show();
+                                            }
+                                        }
+                                    });
+
+                            alert_builder.show();
+
+
+                        }
+                    }
+                });
+
     }
 
 }
