@@ -76,14 +76,7 @@ public class RobotFragment extends Fragment {
         control_spot_origin_position[0] = (float) 195;
         control_spot_origin_position[1] = (float) 170;
 
-
-
-//        Log.d(TAG,control_layout.getMinHeight()+"  "+control_layout.getMaxHeight()+"");
-
-        //Speed_monitor
-
-        //end
-
+        set_first_internet_username();
         set_control_keyboard(control_layout);
 
         hand_switch = root.findViewById(R.id.control_hand_switch);
@@ -92,6 +85,9 @@ public class RobotFragment extends Fragment {
 //        ensure_AutoSwitch_status(hand_switch);
 
         return root;
+    }
+
+    private void set_first_internet_username() {
     }
 
     private void set_control_keyboard(ConstraintLayout control_layout) {
@@ -110,7 +106,7 @@ public class RobotFragment extends Fragment {
 
                             break;
                         case MotionEvent.ACTION_UP:
-                            set_touch_spot(control_spot_origin_position[0]+53,control_spot_origin_position[1]+60);
+                            set_touch_spot(control_spot_origin_position[0]+50,control_spot_origin_position[1]+57);
                             db.child("control").child("speed").setValue(0)
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -199,9 +195,10 @@ public class RobotFragment extends Fragment {
 //                Log.d(TAG,internet_now_use);
 
                 if (isChecked && internet_now_use.equals("NO_ONE")) {
+                    Toast.makeText(context,name + " 正在使用中",Toast.LENGTH_SHORT).show();
                     setHand(true);
                 }else if(isChecked && !internet_now_use.equals("NO_ONE")){
-                    Toast.makeText(context,internet_now_use + " 正在使用中，請等他離開",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,internet_now_use + " 正在使用中",Toast.LENGTH_SHORT).show();
                     buttonView.setChecked(false);
                 }else if (!isChecked && internet_now_use.equals(name)){
                     setHand(false);

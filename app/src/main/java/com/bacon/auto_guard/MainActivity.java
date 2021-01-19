@@ -1,4 +1,4 @@
-package com.bacon.auto_guard;
+ package com.bacon.auto_guard;
 
 import android.app.AlertDialog;
 import android.content.Context;
