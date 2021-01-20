@@ -2,26 +2,26 @@ package com.bacon.auto_guard.ui.robot;
 
 class X_Y_Convert {
     private int x,y;
-    public String convert(int x, int y){
+    public int convert(int x, int y){
         this.x = x;
         this.y = y;
 
         if (circle())
-            return "0";
+            return 0;
         else if (check_A())
-            return "2";
+            return 2;
         else if (check_B())
-            return "5";
+            return 5;
         else if (check_C())
-            return "1";
+            return 1;
         else if (check_D())
-            return "6";
+            return 6;
         else if (check_E())
-            return "3";
+            return 3;
         else if (check_F())
-            return "4";
+            return 4;
         else
-            return "000";
+            return 0;
     }
 
     public int get_speed(int x, int y){

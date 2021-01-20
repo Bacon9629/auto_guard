@@ -34,13 +34,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import static android.content.ContentValues.TAG;
 
 public class RobotFragment extends Fragment {
 
     private RobotViewModel robotViewModel;
-    private DatabaseReference db;
+//    private DatabaseReference db;
+    private FirebaseFirestore db;
     private Context context;
     private Robot_Data robot_data;
     private String name;
@@ -50,10 +55,10 @@ public class RobotFragment extends Fragment {
     private String internet_now_use = "";
     private final float[] control_spot_origin_position = new float[2];
 
-    ConstraintLayout control_layout;
-    ToggleButton hand_switch;
-    ImageView touch_spot;
-    TextView control_name;
+    private ConstraintLayout control_layout;
+    private ToggleButton hand_switch;
+    private ImageView touch_spot;
+    private TextView control_name;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +67,7 @@ public class RobotFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_robot, container, false);
 
         context = getActivity();
-        db = FirebaseDatabase.getInstance().getReference("robot");
+        db = FirebaseFirestore.getInstance();
         convert = new X_Y_Convert();
         robot_data = new Robot_Data(context);
 
@@ -100,14 +105,18 @@ public class RobotFragment extends Fragment {
                         case MotionEvent.ACTION_MOVE:
                             int x = (int)event.getX();
                             int y = (int)event.getY();
-                            db.child("control").child("direction").setValue(convert.convert(x,y));
-                            db.child("control").child("speed").setValue(convert.get_speed(x,y));
+                            db.collection("user1").document("robot")
+                                    .update("direction", convert.convert(x,y));
+                            db.collection("user1").document("robot")
+                                    .update("speed", convert.get_speed(x,y));
                             set_touch_spot(event.getX(),event.getY());
-
                             break;
+
                         case MotionEvent.ACTION_UP:
                             set_touch_spot(control_spot_origin_position[0]+50,control_spot_origin_position[1]+57);
-                            db.child("control").child("speed").setValue(0)
+
+                            db.collection("user1").document("robot")
+                                    .update("speed", 0)
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
@@ -117,7 +126,8 @@ public class RobotFragment extends Fragment {
                                         }
                                     });
 
-                            db.child("control").child("direction").setValue("0")
+                            db.collection("user1").document("robot")
+                                    .update("direction", 0)
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
@@ -126,14 +136,13 @@ public class RobotFragment extends Fragment {
                                             control_layout.callOnClick();
                                         }
                                     });
+
                     }
                 }catch (Exception e){
                     e.printStackTrace();
                     Toast.makeText(context,"上傳錯誤",Toast.LENGTH_LONG).show();
                     control_layout.callOnClick();
                 }
-
-
 
 //                Log.d(TAG,convert.convert(event.getX(),event.getY()));
 //                Log.d(TAG,"a="+convert.check_a()+" b="+convert.check_b()+" c="+convert.check_c()+" d="+convert.check_d());
@@ -162,30 +171,32 @@ public class RobotFragment extends Fragment {
     private void sethand_switch(ToggleButton hand_switch) {
 
         String temp = "my name  : "+name+"\ncontrol by : ";
-        db.child("control_by").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                internet_now_use = snapshot.getValue().toString();
-                control_name.setText(String.format("%s%s", temp, internet_now_use));
 
-                if (internet_now_use.equals("NO_ONE")){
-                    flag_no_one_use = true;
-                }
-                if (internet_now_use.equals(name)){
-                    control_layout.setVisibility(View.VISIBLE);
-                }else{
-                    control_layout.setVisibility(View.GONE);
-                    flag_no_one_use = false;
-                }
+        db.collection("user1").document("robot").
+                collection("control_by").document("control_by")
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                hand_switch.setChecked(snapshot.getValue().equals(name));
-            }
+                        internet_now_use = value.get("control_by").toString();
+//                        internet_now_use = snapshot.getValue().toString();
+                        control_name.setText(String.format("%s%s", temp, internet_now_use));
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                        if (internet_now_use.equals("NO_ONE")){
+                            flag_no_one_use = true;
+                        }
+                        if (internet_now_use.equals(name)){
+                            control_layout.setVisibility(View.VISIBLE);
+                        }else{
+                            control_layout.setVisibility(View.GONE);
+                            flag_no_one_use = false;
+                        }
 
-            }
-        });
+                        hand_switch.setChecked(value.get("control_by").toString().equals(name));
+//                        hand_switch.setChecked(snapshot.getValue().equals(name));
+
+                    }
+                });
 
 
         hand_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -215,7 +226,9 @@ public class RobotFragment extends Fragment {
     public void setHand(boolean hand){
         try {
             if (!hand) {
-                db.child("control_by").setValue("NO_ONE")
+
+                db.collection("user1").document("robot").collection("control_by")
+                        .document("control_by").update("control_by", "NO_ONE")
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -224,7 +237,9 @@ public class RobotFragment extends Fragment {
                                 setHand(hand);
                             }
                         });
-                db.child("control").child("direction").setValue("0")
+
+                db.collection("user1").document("robot")
+                        .update("direction", 0)
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -233,7 +248,9 @@ public class RobotFragment extends Fragment {
                                 setHand(hand);
                             }
                         });
-                db.child("control").child("speed").setValue(0)
+
+                db.collection("user1").document("robot")
+                        .update("speed", 0)
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -242,8 +259,12 @@ public class RobotFragment extends Fragment {
                                 setHand(hand);
                             }
                         });
+
             } else {
-                db.child("control_by").setValue(name)
+
+                db.collection("user1").document("robot")
+                        .collection("control_by").document("control_by")
+                        .update("control_by", name)
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -252,6 +273,7 @@ public class RobotFragment extends Fragment {
                                 setHand(hand);
                             }
                         });
+
             }
         } catch (Exception e){
             e.printStackTrace();

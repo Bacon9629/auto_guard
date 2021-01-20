@@ -10,11 +10,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
 
 class Robot_Data {
-    DatabaseReference db = FirebaseDatabase.getInstance().getReference("robot");
+//    DatabaseReference db = FirebaseDatabase.getInstance().getReference("robot");
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     boolean someone_use_now = false;
 

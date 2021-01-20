@@ -44,13 +44,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Home_Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/Home_Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/Robot_Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/Robot_Data.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -444,7 +440,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611075330645</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="開始改資料庫途中，改好home的部分了唷">
+      <created>1611163160311</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1611163160311</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -482,7 +485,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="按下按鈕亮顏色，下一步先做robot UI" />
     <MESSAGE value="update again,下一步先做robot UI" />
     <MESSAGE value="parent 跟著database,下一步先做robot UI" />
     <MESSAGE value="低版本會有BUG，已修好,下一步先做robot UI" />
@@ -507,7 +509,8 @@
     <MESSAGE value="ROBOT除了影片部分，其他都完成了唷唷唷" />
     <MESSAGE value="開始改資料庫之前" />
     <MESSAGE value="開始改資料庫途中，目前已經改好version，input user name 有問題" />
-    <option name="LAST_COMMIT_MESSAGE" value="開始改資料庫途中，目前已經改好version，input user name 有問題" />
+    <MESSAGE value="開始改資料庫途中，改好home的部分了唷" />
+    <option name="LAST_COMMIT_MESSAGE" value="開始改資料庫途中，改好home的部分了唷" />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1608519519368">
@@ -553,10 +556,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="828" y="284" width="327" height="426" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608518266347" />
-    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1611075328537">
+    <state x="552" y="0" key="CommitChangelistDialog2" timestamp="1611163157166">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611075328537" />
+    <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611163157166" />
     <state x="552" y="81" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1608747793300" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1609001874471">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -572,25 +575,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="452" y="203" key="Git.Interactive.Rebase.Dialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609001630321" />
-    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1611162951433">
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1611164732765">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611162951433" />
+    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611164732765" />
     <state width="1876" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1611162951433">
+    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1611164732764">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611162951433" />
+    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611164732764" />
     <state width="1876" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1611162951432">
+    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1611164732764">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611162951432" />
+    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611164732764" />
     <state width="1876" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
-    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1611162951433">
+    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1611164732765">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611162951433" />
+    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611164732765" />
     <state width="1876" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608747353148" />
     <state x="184" y="86" key="MergeDialog" timestamp="1609002204887">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -653,7 +656,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java</url>
-          <line>106</line>
+          <line>112</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
