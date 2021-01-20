@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                         //名子跟網路資料庫重複
 
                                         new AlertDialog.Builder(context).setTitle("你是 " + name + " 嗎?")
-                                                .setMessage("這個名子已經登記過了?\n若是同時有兩個同樣名稱的裝置在線上，可能會遭成不可回的錯誤!!")
+                                                .setMessage("這個名子已經登記過了?\n若是同時有兩個同樣名稱的裝置在線上，可能會遭成不可挽回的錯誤!!")
                                                 .setPositiveButton("我就是要用", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {

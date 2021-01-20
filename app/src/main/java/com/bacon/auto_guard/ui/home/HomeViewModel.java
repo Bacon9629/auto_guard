@@ -16,6 +16,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +39,8 @@ public class HomeViewModel extends ViewModel {
     Home_Data home_data = new Home_Data();
 
     SharedPreferences preferences;
-    DataSnapshot dataSnapshot;
+//    DataSnapshot dataSnapshot;
+    QuerySnapshot QuerySnapshot;
     String last_touch = "";
 
     Handler handler;
@@ -56,6 +61,7 @@ public class HomeViewModel extends ViewModel {
 
 //        lastTouch_listener();
 
+        //如果資料庫有變動 => refreshData
         runUI = new Runnable() {
             @Override
             public void run() {
@@ -80,21 +86,16 @@ public class HomeViewModel extends ViewModel {
     }
 
     private void get_internet_data(){
-        home_data.get_internet_data(new ValueEventListener() {
+
+        home_data.get_internet_data(new EventListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Log.d(TAG,"get ALL => " + snapshot.toString());
-//                home_data.select_parent_getData(snapshot,"房間 1");
-                dataSnapshot = snapshot;
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                QuerySnapshot = value;
+                Log.d(TAG, value.getDocumentChanges().toString());
                 refresh_data();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+
     }
 
     public void putContext(Context context){
@@ -127,11 +128,14 @@ public class HomeViewModel extends ViewModel {
     }
 
     private void refresh_data(){
+
+        //把資料重新設定給recycler view
+
 //        Log.d(TAG,"last touch is = "+last_touch);
 
-        //TODO 必須把setValue放在UIThread
+        //必須把setValue放在UIThread
 
-        son_list.setValue(home_data.select_parent_getData(context,dataSnapshot,last_touch));
+        son_list.setValue(home_data.select_parent_getData(context, QuerySnapshot, last_touch));
 
     }
 

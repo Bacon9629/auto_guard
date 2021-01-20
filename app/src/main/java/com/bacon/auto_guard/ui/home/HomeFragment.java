@@ -32,6 +32,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private Context context;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("載入中...");
         progressDialog.setCancelable(false);
+        progressDialog.show();
 
         homeViewModel =
                 new ViewModelProvider(HomeFragment.this).get(HomeViewModel.class);
@@ -61,7 +63,7 @@ public class HomeFragment extends Fragment {
 //        name_data.add("房間 3");
 
                 RecyclerView recycler_parent = root.findViewById(R.id.recycler_home_parent);
-                Recycler_parent_home parent_adapter = new Recycler_parent_home(context,home_data.getParent_list());
+                Recycler_parent_home parent_adapter = new Recycler_parent_home(context, home_data.getParent_list());
                 recycler_parent.setLayoutManager(new LinearLayoutManager(context));
                 recycler_parent.setAdapter(parent_adapter);
 
@@ -75,7 +77,7 @@ public class HomeFragment extends Fragment {
         };
 
 
-        home_data.download_parent_data(context,handler,runnable);
+        home_data.download_parent_data(context, handler, runnable);
 
 
         return root;
