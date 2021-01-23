@@ -4,6 +4,7 @@ import android.content.Context;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -51,9 +52,12 @@ public class RobotFragment extends Fragment {
     private String name;
     private X_Y_Convert convert;
     private final String temp = "";
-    private boolean flag_no_one_use = false;
+    private boolean flag_touching = false;
+    private boolean flag_no_one_use = true;
     private String internet_now_use = "";
     private final float[] control_spot_origin_position = new float[2];
+    private int direction = 0;
+    private int speed = 0;
 
     private ConstraintLayout control_layout;
     private ToggleButton hand_switch;
@@ -81,8 +85,9 @@ public class RobotFragment extends Fragment {
         control_spot_origin_position[0] = (float) 195;
         control_spot_origin_position[1] = (float) 170;
 
-        set_first_internet_username();
         set_control_keyboard(control_layout);
+
+        update_thread();
 
         hand_switch = root.findViewById(R.id.control_hand_switch);
 
@@ -92,9 +97,6 @@ public class RobotFragment extends Fragment {
         return root;
     }
 
-    private void set_first_internet_username() {
-    }
-
     private void set_control_keyboard(ConstraintLayout control_layout) {
         control_layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -102,17 +104,25 @@ public class RobotFragment extends Fragment {
                 try {
                     switch (event.getAction()){
                         case MotionEvent.ACTION_DOWN:
+                            upload_speed_direction();
                         case MotionEvent.ACTION_MOVE:
+                            flag_touching = true;
+
                             int x = (int)event.getX();
                             int y = (int)event.getY();
-                            db.collection("user1").document("robot")
-                                    .update("direction", convert.convert(x,y));
-                            db.collection("user1").document("robot")
-                                    .update("speed", convert.get_speed(x,y));
+                            direction = convert.convert(x,y);
+                            speed = convert.get_speed(x,y);
+//                            db.collection("user1").document("robot")
+//                                    .update("direction", convert.convert(x,y));
+//                            db.collection("user1").document("robot")
+//                                    .update("speed", convert.get_speed(x,y));
                             set_touch_spot(event.getX(),event.getY());
                             break;
 
                         case MotionEvent.ACTION_UP:
+                            flag_touching = false;
+                            direction = 0;
+                            speed = 0;
                             set_touch_spot(control_spot_origin_position[0]+50,control_spot_origin_position[1]+57);
 
                             db.collection("user1").document("robot")
@@ -154,6 +164,28 @@ public class RobotFragment extends Fragment {
         });
     }
 
+    private void update_thread(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (flag_touching){
+                    upload_speed_direction();
+                }
+
+                update_thread();
+            }
+        },500);
+
+    }
+
+    private void upload_speed_direction(){
+        db.collection("user1").document("robot")
+                .update("direction", direction);
+        db.collection("user1").document("robot")
+                .update("speed", speed);
+    }
+
     private void set_touch_spot(float x, float y) {
 
         touch_spot.setX(x-53);
@@ -172,8 +204,7 @@ public class RobotFragment extends Fragment {
 
         String temp = "my name  : "+name+"\ncontrol by : ";
 
-        db.collection("user1").document("robot").
-                collection("control_by").document("control_by")
+        db.collection("user1").document("robot_control_by")
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -227,8 +258,8 @@ public class RobotFragment extends Fragment {
         try {
             if (!hand) {
 
-                db.collection("user1").document("robot").collection("control_by")
-                        .document("control_by").update("control_by", "NO_ONE")
+                db.collection("user1").document("robot_control_by")
+                        .update("control_by", "NO_ONE")
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -262,8 +293,7 @@ public class RobotFragment extends Fragment {
 
             } else {
 
-                db.collection("user1").document("robot")
-                        .collection("control_by").document("control_by")
+                db.collection("user1").document("robot_control_by")
                         .update("control_by", name)
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
