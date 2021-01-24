@@ -1,10 +1,17 @@
 package com.bacon.auto_guard.ui.robot;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.media.ImageReader;
+import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -35,10 +42,27 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.Blob;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -63,6 +87,7 @@ public class RobotFragment extends Fragment {
     private ToggleButton hand_switch;
     private ImageView touch_spot;
     private TextView control_name;
+    private ImageView realtime_img;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -79,7 +104,10 @@ public class RobotFragment extends Fragment {
         touch_spot = root.findViewById(R.id.control_touch_spot);
         control_name = root.findViewById(R.id.control_name);
         name = context.getSharedPreferences("activity",0).getString("name","無名氏");
+        realtime_img = root.findViewById(R.id.realtime_video);
         control_name.setText(name);
+
+        realtime_img_video();
 
 
         control_spot_origin_position[0] = (float) 195;
@@ -95,6 +123,47 @@ public class RobotFragment extends Fragment {
 //        ensure_AutoSwitch_status(hand_switch);
 
         return root;
+    }
+
+    private void realtime_img_video() {
+
+        db.collection("user1").document("robot_image")
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                Bitmap bitmap = convertbytesToIcon(
+                        task.getResult().getBlob("realtime_image").toBytes());
+                realtime_img.setImageBitmap(bitmap);
+
+            }
+        });
+
+        db.collection("user1").document("robot_image")
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                        Bitmap bitmap = convertbytesToIcon(
+                                value.getBlob("realtime_image").toBytes());
+                        realtime_img.setImageBitmap(bitmap);
+
+                    }
+                });
+
+    }
+
+    public Bitmap convertbytesToIcon(byte[] output) {
+// OutputStream out;
+        Bitmap bitmap = null;
+        try {
+            bitmap = BitmapFactory.decodeByteArray(output, 0,
+                    output.length);
+            return bitmap;
+        } catch (Exception e) {
+            Log.d(TAG, "bitmap wrong");
+            return null;
+        }
     }
 
     private void set_control_keyboard(ConstraintLayout control_layout) {
@@ -180,10 +249,11 @@ public class RobotFragment extends Fragment {
     }
 
     private void upload_speed_direction(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("direction", direction);
+        map.put("speed", speed);
         db.collection("user1").document("robot")
-                .update("direction", direction);
-        db.collection("user1").document("robot")
-                .update("speed", speed);
+                .update(map);
     }
 
     private void set_touch_spot(float x, float y) {

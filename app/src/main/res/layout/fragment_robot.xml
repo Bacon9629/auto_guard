@@ -7,7 +7,7 @@
     tools:context=".ui.robot.RobotFragment">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/realtime_video"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@android:drawable/ic_menu_slideshow"
@@ -36,7 +36,6 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginEnd="16dp"
-            android:text="TextView"
 
             app:layout_constraintBottom_toBottomOf="@+id/textView8"
             app:layout_constraintEnd_toEndOf="@+id/textView5"
@@ -50,7 +49,6 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginStart="16dp"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView7"
             app:layout_constraintEnd_toStartOf="@+id/textView6"
             app:layout_constraintHorizontal_bias="0.5"
@@ -64,7 +62,6 @@
             android:layout_height="55dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView6"
@@ -75,7 +72,6 @@
             android:id="@+id/textView6"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:text="TextView"
             app:layout_constraintEnd_toStartOf="@+id/textView7"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView5"
@@ -88,7 +84,6 @@
             android:layout_height="55dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="45dp"
-            android:text="TextView"
             app:layout_constraintEnd_toEndOf="@+id/textView7"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/textView7"
@@ -99,7 +94,6 @@
             android:id="@+id/textView9"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/textView6"
             app:layout_constraintHorizontal_bias="0.5"
