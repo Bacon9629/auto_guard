@@ -242,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
                                     .setPositiveButton("前往更新", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+                                            checkVersion();
                                             try {
                                                 Uri uri = Uri.parse(version_content.get("uri").toString());
 
