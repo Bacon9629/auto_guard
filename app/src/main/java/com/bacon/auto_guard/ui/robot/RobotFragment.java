@@ -132,9 +132,13 @@ public class RobotFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                Bitmap bitmap = convertbytesToIcon(
-                        task.getResult().getBlob("realtime_image").toBytes());
-                realtime_img.setImageBitmap(bitmap);
+                if(task.getResult().getBlob("realtime_image") != null){
+                    Bitmap bitmap = convertbytesToIcon(
+                            task.getResult().getBlob("realtime_image").toBytes());
+                    realtime_img.setImageBitmap(bitmap);
+                }else{
+                    realtime_img.setImageResource(R.drawable.ic_floor_robot);
+                }
 
             }
         });
@@ -144,9 +148,14 @@ public class RobotFragment extends Fragment {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                        Bitmap bitmap = convertbytesToIcon(
-                                value.getBlob("realtime_image").toBytes());
-                        realtime_img.setImageBitmap(bitmap);
+                        if(value.getBlob("realtime_image") != null){
+                            Bitmap bitmap = convertbytesToIcon(
+                                    value.getBlob("realtime_image").toBytes());
+                            realtime_img.setImageBitmap(bitmap);
+                        }else{
+                            realtime_img.setImageResource(R.drawable.ic_floor_robot);
+                        }
+
 
                     }
                 });
