@@ -122,7 +122,7 @@ public class HomeViewModel extends ViewModel {
                 lastTouch_listener();
 
             }
-        },50);
+        },100);
 
 
     }

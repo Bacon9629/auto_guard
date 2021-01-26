@@ -44,10 +44,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/home/HomeViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -481,7 +480,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611566363516</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="開始做拍照上傳人臉">
+      <created>1611595534637</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1611595534637</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -519,7 +525,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="..." />
     <MESSAGE value="....." />
     <MESSAGE value="........" />
     <MESSAGE value="Revert &quot;低版本會有BUG，已修好,下一步先做robot UI&quot;&#10;&#10;This reverts commit 6d6f4f57" />
@@ -544,7 +549,8 @@
     <MESSAGE value="資料庫OK，更改了上傳speed和direction的方法" />
     <MESSAGE value="已經把下載robot_realtime_img做好了" />
     <MESSAGE value="robot_realtime Image BUG更新" />
-    <option name="LAST_COMMIT_MESSAGE" value="robot_realtime Image BUG更新" />
+    <MESSAGE value="開始做拍照上傳人臉" />
+    <option name="LAST_COMMIT_MESSAGE" value="開始做拍照上傳人臉" />
   </component>
   <component name="WindowStateProjectService">
     <state x="586" y="198" key="#Inspections" timestamp="1608519519368">
@@ -577,11 +583,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608397904568" />
-    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1611595235238">
+    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1611661034193">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611072971913" />
-    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1611595235238" />
+    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1611661034193" />
     <state x="540" y="275" key="AndroidCreateResourceFileDialog" timestamp="1609127157161">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -591,11 +597,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="828" y="284" width="327" height="426" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608518266347" />
-    <state x="552" y="81" key="CommitChangelistDialog2" timestamp="1611566360893">
+    <state x="552" y="81" key="CommitChangelistDialog2" timestamp="1611595532222">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611165029387" />
-    <state x="552" y="81" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1611566360893" />
+    <state x="552" y="81" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1611595532222" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1609001874471">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -610,26 +616,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="452" y="203" key="Git.Interactive.Rebase.Dialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609001630321" />
-    <state width="1877" height="189" key="GridCell.Tab.0.bottom" timestamp="1611566880181">
+    <state width="1877" height="188" key="GridCell.Tab.0.bottom" timestamp="1611661468853">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="938" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611165435396" />
-    <state width="1877" height="189" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1611566880181" />
-    <state width="1877" height="189" key="GridCell.Tab.0.center" timestamp="1611566880181">
+    <state width="1877" height="188" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1611661468853" />
+    <state width="1877" height="188" key="GridCell.Tab.0.center" timestamp="1611661468853">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="938" height="277" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611165435396" />
-    <state width="1877" height="189" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1611566880181" />
-    <state width="1877" height="189" key="GridCell.Tab.0.left" timestamp="1611566880181">
+    <state width="1877" height="188" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1611661468853" />
+    <state width="1877" height="188" key="GridCell.Tab.0.left" timestamp="1611661468853">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="938" height="277" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611165435396" />
-    <state width="1877" height="189" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1611566880181" />
-    <state width="1877" height="189" key="GridCell.Tab.0.right" timestamp="1611566880181">
+    <state width="1877" height="188" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1611661468853" />
+    <state width="1877" height="188" key="GridCell.Tab.0.right" timestamp="1611661468853">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="938" height="277" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611165435396" />
-    <state width="1877" height="189" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1611566880181" />
+    <state width="1877" height="188" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1611661468853" />
     <state x="184" y="86" key="MergeDialog" timestamp="1609002204887">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -675,10 +681,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="662" y="265" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609043097305" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1611073592552">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1611666033666">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611073592552" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1611666033666" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1611111626883">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -691,7 +698,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/bacon/auto_guard/ui/robot/RobotFragment.java</url>
-          <line>197</line>
+          <line>210</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

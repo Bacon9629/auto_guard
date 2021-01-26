@@ -43,6 +43,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.Blob;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -63,6 +64,7 @@ import java.io.OutputStreamWriter;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
@@ -70,7 +72,7 @@ public class RobotFragment extends Fragment {
 
     private RobotViewModel robotViewModel;
 //    private DatabaseReference db;
-    private FirebaseFirestore db;
+    private DocumentReference db;
     private Context context;
     private Robot_Data robot_data;
     private String name;
@@ -82,6 +84,7 @@ public class RobotFragment extends Fragment {
     private final float[] control_spot_origin_position = new float[2];
     private int direction = 0;
     private int speed = 0;
+    private boolean flag_watching_key = true;
 
     private ConstraintLayout control_layout;
     private ToggleButton hand_switch;
@@ -96,7 +99,7 @@ public class RobotFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_robot, container, false);
 
         context = getActivity();
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance().collection("user1").document("robot");
         convert = new X_Y_Convert();
         robot_data = new Robot_Data(context);
 
@@ -108,6 +111,8 @@ public class RobotFragment extends Fragment {
         control_name.setText(name);
 
         realtime_img_video();
+
+        update_watching();
 
 
         control_spot_origin_position[0] = (float) 195;
@@ -125,16 +130,31 @@ public class RobotFragment extends Fragment {
         return root;
     }
 
+    private void update_watching() {
+        if (flag_watching_key) {
+            try {
+                db.collection("image").document("watching")
+                        .update("watching", (int) (Math.random() * 100));
+
+            }catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(context, "請求影片失敗，請確認網路連線", Toast.LENGTH_SHORT).show();
+            }
+
+            new Handler().postDelayed(this::update_watching, 4000);
+        }
+    }
+
     private void realtime_img_video() {
 
-        db.collection("user1").document("robot_image")
+        db.collection("image").document("realtime_video")
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                if(task.getResult().getBlob("realtime_image") != null){
+                if(task.getResult().getBlob("realtime_video") != null){
                     Bitmap bitmap = convertbytesToIcon(
-                            task.getResult().getBlob("realtime_image").toBytes());
+                            task.getResult().getBlob("realtime_video").toBytes());
                     realtime_img.setImageBitmap(bitmap);
                 }else{
                     realtime_img.setImageResource(R.drawable.ic_floor_robot);
@@ -143,19 +163,19 @@ public class RobotFragment extends Fragment {
             }
         });
 
-        db.collection("user1").document("robot_image")
+        db.collection("image").document("realtime_video")
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                        if(value.getBlob("realtime_image") != null){
+                        try {
                             Bitmap bitmap = convertbytesToIcon(
-                                    value.getBlob("realtime_image").toBytes());
+                                    value.getBlob("realtime_video").toBytes());
                             realtime_img.setImageBitmap(bitmap);
-                        }else{
+                        }catch (Exception e){
+                            e.printStackTrace();
                             realtime_img.setImageResource(R.drawable.ic_floor_robot);
                         }
-
 
                     }
                 });
@@ -163,12 +183,9 @@ public class RobotFragment extends Fragment {
     }
 
     public Bitmap convertbytesToIcon(byte[] output) {
-// OutputStream out;
-        Bitmap bitmap = null;
         try {
-            bitmap = BitmapFactory.decodeByteArray(output, 0,
+            return BitmapFactory.decodeByteArray(output, 0,
                     output.length);
-            return bitmap;
         } catch (Exception e) {
             Log.d(TAG, "bitmap wrong");
             return null;
@@ -190,10 +207,6 @@ public class RobotFragment extends Fragment {
                             int y = (int)event.getY();
                             direction = convert.convert(x,y);
                             speed = convert.get_speed(x,y);
-//                            db.collection("user1").document("robot")
-//                                    .update("direction", convert.convert(x,y));
-//                            db.collection("user1").document("robot")
-//                                    .update("speed", convert.get_speed(x,y));
                             set_touch_spot(event.getX(),event.getY());
                             break;
 
@@ -203,7 +216,7 @@ public class RobotFragment extends Fragment {
                             speed = 0;
                             set_touch_spot(control_spot_origin_position[0]+50,control_spot_origin_position[1]+57);
 
-                            db.collection("user1").document("robot")
+                            db.collection("control").document("control")
                                     .update("speed", 0)
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -214,7 +227,7 @@ public class RobotFragment extends Fragment {
                                         }
                                     });
 
-                            db.collection("user1").document("robot")
+                            db.collection("control").document("control")
                                     .update("direction", 0)
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -261,8 +274,14 @@ public class RobotFragment extends Fragment {
         Map<String, Object> map = new HashMap<>();
         map.put("direction", direction);
         map.put("speed", speed);
-        db.collection("user1").document("robot")
-                .update(map);
+        try {
+            db.collection("control").document("control")
+                    .update(map);
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(context, "上傳方向、速度錯誤，請確認網路狀態", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void set_touch_spot(float x, float y) {
@@ -272,18 +291,11 @@ public class RobotFragment extends Fragment {
 
     }
 
-
-//    private void ensure_AutoSwitch_status(ToggleButton hand_switch) {
-//
-//        db.child("control_by").addValueEventListener(robot_data.ensure_AutoSwitch_status(hand_switch,name));
-//
-//    }
-
     private void sethand_switch(ToggleButton hand_switch) {
 
         String temp = "my name  : "+name+"\ncontrol by : ";
 
-        db.collection("user1").document("robot_control_by")
+        db.collection("control").document("control_by")
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -337,7 +349,7 @@ public class RobotFragment extends Fragment {
         try {
             if (!hand) {
 
-                db.collection("user1").document("robot_control_by")
+                db.collection("control").document("control_by")
                         .update("control_by", "NO_ONE")
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -348,7 +360,7 @@ public class RobotFragment extends Fragment {
                             }
                         });
 
-                db.collection("user1").document("robot")
+                db.collection("control").document("control")
                         .update("direction", 0)
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -359,8 +371,8 @@ public class RobotFragment extends Fragment {
                             }
                         });
 
-                db.collection("user1").document("robot")
-                        .update("speed", 0)
+                db.collection("control").document("control")
+                        .update("control", 0)
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -372,7 +384,7 @@ public class RobotFragment extends Fragment {
 
             } else {
 
-                db.collection("user1").document("robot_control_by")
+                db.collection("control").document("control_by")
                         .update("control_by", name)
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -395,18 +407,21 @@ public class RobotFragment extends Fragment {
     @Override
     public void onPause() {
         hand_switch.setChecked(false);
+        flag_watching_key = false;
         super.onPause();
     }
 
     @Override
     public void onStop() {
         hand_switch.setChecked(false);
+        flag_watching_key = false;
         super.onStop();
     }
 
     @Override
     public void onDestroy() {
         hand_switch.setChecked(false);
+        flag_watching_key = false;
         super.onDestroy();
     }
 }
