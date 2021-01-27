@@ -4,4 +4,7 @@
     <string name="title_2">Home</string>
     <string name="title_3">Notification</string>
     <string name="preference_name">name</string>
+    <string name="admin_list">管理人清單</string>
+    <string name="custom_list">管理訪客清單</string>
+    <string name="snapshot_list">觀看截圖清單</string>
 </resources>

@@ -1,5 +1,6 @@
-package com.bacon.auto_guard;
+package com.bacon.auto_guard.main;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,15 +8,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bacon.auto_guard.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -38,14 +48,18 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
     Context context = this;
+    String TAG = "ContentValues";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +77,16 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_robot, R.id.navigation_home, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void inputName() {
@@ -268,6 +288,88 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+    }
+
+    public void face_list(MenuItem item) {
+        String title = item.getTitle().toString();
+        set_menu_AlertDialog(title);
+    }
+
+    private void set_menu_AlertDialog(String title){
+
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        int phone_height = metric.heightPixels;   // 螢幕高度（畫素）
+
+        MainActivity_Data mainActivity_data = new MainActivity_Data(context);
+
+        AlertDialog dialog = new AlertDialog.Builder(context).create();
+        @SuppressLint("InflateParams") View v = LayoutInflater.from(context).inflate(R.layout.menu_face_list, null);
+        dialog.setView(v);
+        Window window = dialog.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(0));
+
+        TextView title_text = v.findViewById(R.id.menu_face_list_title);
+        RecyclerView list_view = v.findViewById(R.id.menu_face_list_recycler);
+        TextView close_button = v.findViewById(R.id.menu_face_list_close);
+        TextView check_button = v.findViewById(R.id.menu_face_list_check);
+        TextView build_button = v.findViewById(R.id.menu_face_list_build);
+
+
+//        ConstraintLayout layout = v.findViewById(R.id.menu_face_list_constrain);
+//        ConstraintLayout.LayoutParams laParams = (ConstraintLayout.LayoutParams) layout.getLayoutParams();
+//        laParams.height = (int) (phone_height*0.6);
+//        laParams.width = list_view.getWidth();
+//        list_view.setLayoutParams(laParams);
+
+        switch (title){
+            case "管理人清單":{
+
+                break;
+            }
+            case "管理訪客清單":{
+
+                break;
+            }
+            case "觀看截圖清單":{
+
+                mainActivity_data.download("觀看截圖清單", new Runnable() {
+                    @Override
+                    public void run() {
+                        Recycler_menu_face_list adapter = new Recycler_menu_face_list(mainActivity_data.get_snapshot_date()
+                                , true, "", mainActivity_data.get_snapshot(), "觀看截圖清單", context);
+
+                        list_view.setLayoutManager(new LinearLayoutManager(context));
+                        list_view.setAdapter(adapter);
+
+
+                    }
+                });
+
+
+
+                break;
+            }
+            default:
+        }
+
+        title_text.setText(title);
+        close_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity_data.download("觀看截圖清單",
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG, mainActivity_data.get_snapshot().toString());
+                            }
+                        });
+//                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
 
     }
 
