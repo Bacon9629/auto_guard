@@ -7,6 +7,27 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/menu_face_list_recycler_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="19dp"
+        android:clickable="true"
+        android:ems="10"
+        android:enabled="true"
+        android:focusable="true"
+        android:singleLine="false"
+        android:textColor="#171717"
+        android:textSize="24sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/menu_face_list_recycler_outside"
+        app:layout_constraintStart_toStartOf="@+id/menu_face_list_recycler_outside"
+        app:layout_constraintTop_toBottomOf="@+id/menu_face_list_recycler_image" />
+
+    <TextView
         android:id="@+id/menu_face_list_recycler_outside"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -14,7 +35,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/list_item_shape_uncheck"
+        android:background="@drawable/select_button_touch"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,26 +48,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/menu_face_list_recycler_text"
         app:layout_constraintEnd_toEndOf="@+id/menu_face_list_recycler_outside"
         app:layout_constraintStart_toStartOf="@+id/menu_face_list_recycler_outside"
-        app:layout_constraintTop_toTopOf="@+id/menu_face_list_recycler_outside"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/face" />
-
-    <TextView
-        android:id="@+id/menu_face_list_recycler_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="17dp"
-        android:ems="10"
-        android:enabled="true"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/menu_face_list_recycler_outside"
-        app:layout_constraintEnd_toEndOf="@+id/menu_face_list_recycler_outside"
-        app:layout_constraintStart_toStartOf="@+id/menu_face_list_recycler_outside"
-        app:layout_constraintTop_toBottomOf="@+id/menu_face_list_recycler_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

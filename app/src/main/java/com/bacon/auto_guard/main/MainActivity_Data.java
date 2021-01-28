@@ -2,14 +2,17 @@ package com.bacon.auto_guard.main;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bacon.auto_guard.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.Blob;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -80,8 +83,49 @@ class MainActivity_Data {
             default:
         }
 
+    }
 
+    public void delete(String title, String name){
+        switch (title){
+            case "管理人清單":{
+                img_db.document("admin_list").update(name, FieldValue.delete())
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, "刪除資料失敗", Toast.LENGTH_SHORT).show();
+                                delete(title, name);
+                            }
+                        });
+                break;
+            }
+            case "管理訪客清單":{
+                img_db.document("custom_list").update(name, FieldValue.delete())
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, "刪除資料失敗", Toast.LENGTH_SHORT).show();
+                                delete(title, name);
+                            }
+                        });
+                break;
+            }
+        }
+    }
 
+    public void delete(String title, String date, String time){
+        String date2 = date.replace("/", ":");
+        if (title.equals("觀看截圖清單")){
+            img_db.document("snapshot").collection("date").document(date2)
+                    .update(time, FieldValue.delete())
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "刪除資料失敗", Toast.LENGTH_SHORT).show();
+                            delete(title, date, time);
+                        }
+                    });
+
+        }
     }
 
     public HashMap<String, Map<String, Object>> get_snapshot(){

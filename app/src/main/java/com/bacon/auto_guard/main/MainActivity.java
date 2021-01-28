@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_robot, R.id.navigation_home, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
 
@@ -298,10 +298,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void set_menu_AlertDialog(String title){
 
-        DisplayMetrics metric = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metric);
-        int phone_height = metric.heightPixels;   // 螢幕高度（畫素）
-
         MainActivity_Data mainActivity_data = new MainActivity_Data(context);
 
         AlertDialog dialog = new AlertDialog.Builder(context).create();
@@ -316,19 +312,31 @@ public class MainActivity extends AppCompatActivity {
         TextView check_button = v.findViewById(R.id.menu_face_list_check);
         TextView build_button = v.findViewById(R.id.menu_face_list_build);
 
-
-//        ConstraintLayout layout = v.findViewById(R.id.menu_face_list_constrain);
-//        ConstraintLayout.LayoutParams laParams = (ConstraintLayout.LayoutParams) layout.getLayoutParams();
-//        laParams.height = (int) (phone_height*0.6);
-//        laParams.width = list_view.getWidth();
-//        list_view.setLayoutParams(laParams);
-
         switch (title){
             case "管理人清單":{
+
+                mainActivity_data.download("管理人清單", new Runnable() {
+                    @Override
+                    public void run() {
+                        Recycler_menu_face_list adapter = new Recycler_menu_face_list(
+                                mainActivity_data.get_map_admin(), "管理人清單", context, mainActivity_data);
+                        list_view.setLayoutManager(new LinearLayoutManager(context));
+                        list_view.setAdapter(adapter);
+                    }
+                });
 
                 break;
             }
             case "管理訪客清單":{
+                mainActivity_data.download("管理訪客清單", new Runnable() {
+                    @Override
+                    public void run() {
+                        Recycler_menu_face_list adapter = new Recycler_menu_face_list(
+                                mainActivity_data.get_map_custom(), "管理訪客清單", context, mainActivity_data);
+                        list_view.setLayoutManager(new LinearLayoutManager(context));
+                        list_view.setAdapter(adapter);
+                    }
+                });
 
                 break;
             }
@@ -338,7 +346,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Recycler_menu_face_list adapter = new Recycler_menu_face_list(mainActivity_data.get_snapshot_date()
-                                , true, "", mainActivity_data.get_snapshot(), "觀看截圖清單", context);
+                                , true, "", mainActivity_data.get_snapshot()
+                                , "觀看截圖清單", context, mainActivity_data);
 
                         list_view.setLayoutManager(new LinearLayoutManager(context));
                         list_view.setAdapter(adapter);
@@ -358,14 +367,7 @@ public class MainActivity extends AppCompatActivity {
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity_data.download("觀看截圖清單",
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.d(TAG, mainActivity_data.get_snapshot().toString());
-                            }
-                        });
-//                dialog.dismiss();
+                dialog.dismiss();
             }
         });
 
