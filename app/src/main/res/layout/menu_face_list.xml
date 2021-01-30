@@ -73,12 +73,14 @@
         android:background="@drawable/select_button_touch"
         android:gravity="center"
         android:text="確認"
+        android:visibility="gone"
         app:drawableTopCompat="@drawable/ic_check"
         app:layout_constraintBottom_toBottomOf="@+id/menu_face_list_close"
         app:layout_constraintEnd_toStartOf="@+id/menu_face_list_build"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/menu_face_list_close"
-        app:layout_constraintTop_toTopOf="@+id/menu_face_list_close" />
+        app:layout_constraintTop_toTopOf="@+id/menu_face_list_close"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/menu_face_list_build"

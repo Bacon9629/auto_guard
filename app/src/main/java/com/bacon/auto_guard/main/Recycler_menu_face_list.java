@@ -1,24 +1,34 @@
 package com.bacon.auto_guard.main;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bacon.auto_guard.R;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.Blob;
+import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -27,7 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import static android.content.ContentValues.TAG;
 
 class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_list.viewHolder> {
-    Map<String, Object> person_data;
+    Map<String, Object> allList_data;
     ArrayList<String> person_key;
     HashMap<String, Map<String, Object>> snapshot_data;
     ArrayList<String> date_key;
@@ -37,6 +47,8 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
     boolean is_parent;
     String parent;
     MainActivity_Data db;
+    
+    HashMap<String, Bitmap> image_map;
 
     public Recycler_menu_face_list(ArrayList<String> date_key, boolean is_parent, String parent
             , HashMap<String, Map<String, Object>> snapshot_data, String title, Context context
@@ -48,19 +60,20 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
         this.parent = parent;
         this.is_parent = is_parent;
         this.db = db;
-        this.person_data = null;
+        this.allList_data = null;
     }
 
-    public Recycler_menu_face_list(Map<String, Object> person_data, String title, Context context
+    public Recycler_menu_face_list(Map<String, Object> allList_data, String title, Context context
             , MainActivity_Data db){
         this.context = context;
-        this.person_data = person_data;
+        this.allList_data = allList_data;
         this.title = title;
         this.date_key = null;
         this.snapshot_data = null;
         this.db = db;
-        person_key = new ArrayList<>(person_data.keySet());
+        person_key = new ArrayList<>(allList_data.keySet());
         Collections.sort(person_key);
+        image_map = new HashMap<>();
     }
 
     public void change_parent(boolean is_parent, String  parent){
@@ -71,6 +84,37 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
             Collections.sort(this.the_date_img_key);
         }
         this.notifyDataSetChanged();
+    }
+
+
+    @SuppressLint("StaticFieldLeak")
+    private void download_image_async(String url, ImageView imageView, HashMap<String ,Bitmap> map){
+
+        new AsyncTask<String, Void, Bitmap>() {
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                Bitmap bitmap = null;
+                
+                try{
+                    URL url = new URL(strings[0]);
+                    
+                    bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    
+                } catch (IOException e){
+                    e.printStackTrace();
+                    Toast.makeText(context, "下載失敗，請重新開啟", Toast.LENGTH_SHORT).show();
+                }
+
+                return bitmap;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
+                imageView.setImageBitmap(bitmap);
+            }
+        }.execute(url);
+
     }
 
 
@@ -128,8 +172,7 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
                 }else {
                     int b_position = position - 1;
                     Blob blob = (Blob) snapshot_data.get(parent).get(the_date_img_key.get(b_position));
-                    Bitmap bitmap = convertbytesToIcon(blob.toBytes());
-                    holder.image.setImageBitmap(bitmap);
+                    holder.image.setImageBitmap(convertbytesToIcon(blob.toBytes()));
 
                     holder.textView.setText(the_date_img_key.get(b_position));
 
@@ -166,9 +209,13 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
 
 
         }else if ("管理人清單".equals(title)){
-
-            Blob blob = (Blob) person_data.get(person_key.get(position));
-            holder.image.setImageBitmap(convertbytesToIcon(blob.toBytes()));
+            HashMap this_one_data = (HashMap) allList_data.get(person_key.get(position));
+            
+            if (image_map.containsKey(person_key.get(position))){
+                holder.image.setImageBitmap((Bitmap) image_map.get(person_key.get(position)));
+            }else{
+                download_image_async(this_one_data.get("image").toString(), holder.image, image_map);
+            }
 
             holder.textView.setText(person_key.get(position));
 
@@ -183,7 +230,7 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     db.delete("管理人清單", v.getTag().toString());
-                                    person_data.remove(v.getTag().toString());
+                                    allList_data.remove(v.getTag().toString());
                                     person_key.remove(v.getTag().toString());
                                     notifyDataSetChanged();
 
@@ -195,12 +242,15 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
             });
 
         }else if ("管理訪客清單".equals(title)){
-            Map map = (Map) person_data.get(person_key.get(position));
+            Map map = (Map) allList_data.get(person_key.get(position));
 
-            Log.d(TAG, person_key.get(position));
 
-            Blob blob = (Blob) map.get("image");
-            holder.image.setImageBitmap(convertbytesToIcon(blob.toBytes()));
+            if (image_map.containsKey(person_key.get(position))){
+                holder.image.setImageBitmap((Bitmap) image_map.get(person_key.get(position)));
+            }else{
+                Log.d(TAG, map.get("image").toString());
+                download_image_async(map.get("image").toString(), holder.image, image_map);
+            }
 
             String string = person_key.get(position) + "\n到期日 : " + map.get("until");
             holder.textView.setText(string);
@@ -217,7 +267,7 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     db.delete("管理訪客清單", v.getTag().toString());
-                                    person_data.remove(v.getTag().toString());
+                                    allList_data.remove(v.getTag().toString());
                                     person_key.remove(v.getTag().toString());
                                     notifyDataSetChanged();
 
@@ -253,7 +303,7 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
                 return snapshot_data.get(parent).size() + 1;
             }
         }else {
-            return person_data.size();
+            return allList_data.size();
         }
     }
 
@@ -264,10 +314,28 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
 
         public viewHolder(@NonNull View v) {
             super(v);
-            image = v.findViewById(R.id.menu_face_list_recycler_image);
-            textView = v.findViewById(R.id.menu_face_list_recycler_text);
+            image = v.findViewById(R.id.menu_face_list_build_image);
+            textView = v.findViewById(R.id.menu_face_list_build_edit);
             outside = v.findViewById(R.id.menu_face_list_recycler_outside);
         }
     }
 
 }
+
+class image_asyncTask extends AsyncTask<String, Integer, Bitmap>{
+
+    image_asyncTask(){
+
+    }
+
+    @Override
+    protected Bitmap doInBackground(String... strings) {
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        super.onPostExecute(bitmap);
+    }
+}
+

@@ -1,18 +1,25 @@
 package com.bacon.auto_guard.main;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.DisplayMetrics;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,7 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,17 +37,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
-import java.net.MalformedURLException;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +58,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -56,10 +66,18 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static android.content.ContentValues.TAG;
+
 public class MainActivity extends AppCompatActivity {
 
-    Context context = this;
-    String TAG = "ContentValues";
+    private static final int PICK_FROM_GALLERY = 7;
+    private static final int PICK_FROM_CAMERA = 9;
+    private static final int PICK_FROM_GET = 5;
+    private final Context context = this;
+    private final String TAG = "ContentValues";
+    private ImageView build_image;
+    private Bitmap temp_bitmap = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -298,6 +316,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void set_menu_AlertDialog(String title){
 
+
+
         MainActivity_Data mainActivity_data = new MainActivity_Data(context);
 
         AlertDialog dialog = new AlertDialog.Builder(context).create();
@@ -341,6 +361,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case "觀看截圖清單":{
+                build_button.setVisibility(View.GONE);
 
                 mainActivity_data.download("觀看截圖清單", new Runnable() {
                     @Override
@@ -364,6 +385,97 @@ public class MainActivity extends AppCompatActivity {
         }
 
         title_text.setText(title);
+
+        build_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder build_builder = new AlertDialog.Builder(context);
+                AlertDialog build_dialog = build_builder.create();
+
+                Window window1 = build_dialog.getWindow();
+                window1.setBackgroundDrawable(new ColorDrawable(0));
+
+                View v2 = LayoutInflater.from(context).inflate(R.layout.menu_face_list_build, null);
+                build_image = v2.findViewById(R.id.menu_face_list_build_image);
+                EditText build_edit = v2.findViewById(R.id.menu_face_list_build_edit);
+                TextView build_title = v2.findViewById(R.id.menu_face_list_build_title);
+                ImageButton build_check_button = v2.findViewById(R.id.menu_face_list_build_check_button);
+
+                build_title.setText((title + " - 建立"));
+
+                build_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String type = "file";
+                        if (!check_permission(type))
+                            return;
+
+                        chose_image(type);
+
+
+//                        new AlertDialog.Builder(context).setTitle("從哪裡取得照片?")
+//                                .setNegativeButton("從檔案", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        String type = "file";
+//                                        if (!check_permission(type))
+//                                            return;
+//
+//                                        chose_image(type);
+//
+//                                    }
+//                                })
+//                                .setPositiveButton("從相機", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        String type = "camera";
+//                                        if (!check_permission(type))
+//                                            return;
+//
+//                                        chose_image(type);
+//
+//                                    }
+//                                })
+//                                .show();
+                    }
+                });
+
+                build_dialog.setView(v2);
+                build_dialog.show();
+
+                build_check_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        byte[] bytes = bitmapToByte(temp_bitmap);
+                        String edit_name = build_edit.getEditableText().toString();
+
+                        if (edit_name == null || temp_bitmap == null){
+                            Toast.makeText(context, "圖片內容或姓名沒打!!!", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        ProgressDialog progressDialog = new ProgressDialog(context);
+                        progressDialog.setTitle("上傳照片中...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+
+                        mainActivity_data.upload(title, edit_name, bytes, new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                set_menu_AlertDialog(title);
+                                progressDialog.dismiss();
+                            }
+                        });
+                        build_dialog.dismiss();
+                    }
+                });
+
+            }
+        });
+
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -373,6 +485,161 @@ public class MainActivity extends AppCompatActivity {
 
         dialog.show();
 
+    }
+
+    private boolean check_permission(String type){
+
+        switch (type){
+
+            case "camera":{
+                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED){
+
+                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+
+                }
+
+                return ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
+            }
+
+            case "file":{
+
+                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED){
+
+                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+
+                }
+
+                return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+
+            }
+
+            default:
+                return true;
+
+        }
+
+
+
+
+    }
+
+    private void chose_image(String type) {
+
+        switch (type){
+            case "file":{
+                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, PICK_FROM_GALLERY);
+                break;
+            }
+
+            case "camera":{
+//                ContentValues value = new ContentValues();
+//                value.put(MediaStore.Audio.Media.MIME_TYPE, "image/jpeg");
+//                Uri uri= getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+//                        value);
+//                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri.getPath());
+
+//                Intent intent = new Intent(); //呼叫照相機
+//                intent.setAction("android.media.action.STILL_IMAGE_CAMERA");
+//
+//                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                break;
+            }
+
+
+        }
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_FROM_CAMERA || requestCode == PICK_FROM_GALLERY) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = data.getData();
+
+                ContentResolver cr = this.getContentResolver();
+
+                Bitmap bitmap = null;
+                temp_bitmap = null;
+                try {
+                    bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                    bitmap = resizeBitMap(bitmap);
+                    build_image.setImageBitmap(bitmap);
+                    temp_bitmap = bitmap;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (OutOfMemoryError ee){
+                    try {
+                        BitmapFactory.Options mOptions = new BitmapFactory.Options();
+                        //Size=2為將原始圖片縮小1/2，Size=4為1/4，以此類推
+                        mOptions.inSampleSize = 3;
+                        bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri),null,mOptions);
+                        build_image.setImageBitmap(bitmap);
+                        temp_bitmap = bitmap;
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+            }
+        }
+    }
+
+    public Bitmap resizeBitMap(Bitmap bitmap){
+        Matrix matrix = new Matrix();
+
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+//想要的大小
+        int newWidth = 360;
+        int newHeight = 520;
+
+//計算比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+// 設定 Matrix 物件，設定 x,y 向的縮放比例
+        matrix.postScale(scaleWidth, scaleHeight);
+
+/*
+ * creatBitmp的參數依序如下：
+ * 原圖資源
+ * 第一個pixel點的x座標
+ * 第一個pixel點的y座標
+ * 圖片的總pixel行
+ * 圖片的總pixel列
+ * Matrix 的設定
+ * 是否filter圖片
+ */
+        return Bitmap.createBitmap(bitmap, 0, 0,
+                bitmap.getWidth(), bitmap.getHeight(),
+                matrix, true);
+    }
+
+    public Bitmap convertbytesToIcon(byte[] output) {
+        try {
+            return BitmapFactory.decodeByteArray(output, 0,
+                    output.length);
+        } catch (Exception e) {
+            Log.d(TAG, "bitmap wrong");
+            return null;
+        }
+    }
+
+    public byte[] bitmapToByte(Bitmap bitmap){
+        ByteArrayOutputStream bStream=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,bStream);
+        return bStream.toByteArray();
     }
 
 }

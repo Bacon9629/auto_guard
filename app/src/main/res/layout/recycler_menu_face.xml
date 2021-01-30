@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/menu_face_list_recycler_text"
+        android:id="@+id/menu_face_list_build_edit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="32dp"
@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/menu_face_list_recycler_outside"
         app:layout_constraintStart_toStartOf="@+id/menu_face_list_recycler_outside"
-        app:layout_constraintTop_toBottomOf="@+id/menu_face_list_recycler_image" />
+        app:layout_constraintTop_toBottomOf="@+id/menu_face_list_build_image" />
 
     <TextView
         android:id="@+id/menu_face_list_recycler_outside"
@@ -44,13 +44,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/menu_face_list_recycler_image"
+        android:id="@+id/menu_face_list_build_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/menu_face_list_recycler_text"
+        app:layout_constraintBottom_toTopOf="@+id/menu_face_list_build_edit"
         app:layout_constraintEnd_toEndOf="@+id/menu_face_list_recycler_outside"
         app:layout_constraintStart_toStartOf="@+id/menu_face_list_recycler_outside"
         app:layout_constraintTop_toTopOf="parent"

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycler_menu_face_list_outconstrain"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/menu_face_list_build_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/menu_face_list_build_image"
+        app:layout_constraintTop_toTopOf="@+id/menu_face_list_build_image"
+        app:layout_constraintVertical_bias="0.487" />
+
+    <TextView
+        android:id="@+id/menu_face_list_recycler_outside"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/list_item_shape_uncheck"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="點擊選擇圖片=>"
+        app:layout_constraintBottom_toBottomOf="@+id/menu_face_list_build_image"
+        app:layout_constraintEnd_toStartOf="@+id/menu_face_list_build_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/menu_face_list_build_image" />
+
+    <TextView
+        android:id="@+id/menu_face_list_build_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/menu_face_list_recycler_outside"
+        app:layout_constraintTop_toTopOf="@+id/menu_face_list_recycler_outside" />
+
+    <EditText
+        android:id="@+id/menu_face_list_build_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="19dp"
+        android:clickable="true"
+        android:ems="10"
+        android:enabled="true"
+        android:focusable="true"
+        android:hint="輸入姓名"
+        android:singleLine="true"
+
+        android:textColor="#171717"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/menu_face_list_build_check_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menu_face_list_build_image" />
+
+    <ImageButton
+        android:id="@+id/menu_face_list_build_check_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_check"
+        android:background="@drawable/select_button_touch"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/menu_face_list_build_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/menu_face_list_build_edit"
+        app:layout_constraintTop_toTopOf="@+id/menu_face_list_build_edit" />
+
+    <ImageButton
+        android:id="@+id/menu_face_list_build_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/menu_face_list_build_edit"
+        app:layout_constraintEnd_toStartOf="@+id/textView12"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/menu_face_list_build_title"
+        app:srcCompat="@drawable/face" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
