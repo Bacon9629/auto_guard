@@ -4,22 +4,21 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,17 +39,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +51,8 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -66,7 +60,8 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static android.content.ContentValues.TAG;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.parseIntent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PICK_FROM_CAMERA = 9;
     private static final int PICK_FROM_GET = 5;
     private final Context context = this;
-    private final String TAG = "ContentValues";
+    private static final String TAG = "ContentValues";
     private ImageView build_image;
     private Bitmap temp_bitmap = null;
 
@@ -199,19 +194,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private HashMap<String, Object> get_version_content(QuerySnapshot task, String version){
+    private HashMap<String, Object> get_version_content(QuerySnapshot task, String version) {
         List<DocumentSnapshot> lists = task.getDocuments();
         HashMap<String, Object> maps = new HashMap<>();
 
-        for(DocumentSnapshot item : lists){
-            if(item.getId().equals(version)){
+        for (DocumentSnapshot item : lists) {
+            if (item.getId().equals(version)) {
                 maps.put("important", item.get("important"));
                 maps.put("uri", item.get("uri"));
 
-                for(int i=0;i<30;i++){
-                    if (item.contains("description" + i)){
+                for (int i = 0; i < 30; i++) {
+                    if (item.contains("description" + i)) {
                         maps.put("description" + i, item.get("description" + i));
-                    }else{
+                    } else {
                         break;
                     }
                 }
@@ -223,14 +218,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private String get_latest_version(QuerySnapshot task){
+    private HashMap<String, String> get_latest_version(QuerySnapshot task) {
         List<DocumentSnapshot> lists = task.getDocuments();
-        for(DocumentSnapshot item : lists){
-            if(item.getId().equals("latest")){
-                return item.get("latest").toString();
+        HashMap<String, String> map = new HashMap<>();
+        for (DocumentSnapshot item : lists) {
+            if (item.getId().equals("latest")) {
+                map.put("latest", item.get("latest").toString());
+                map.put("force", item.get("force").toString());
+
+                return map;
             }
         }
-        return null;
+        return map;
+    }
+
+    private boolean important_version(String device, String cloud) {
+        String[] device_list = device.split("\\.");
+        String[] cloud_list = cloud.split("\\.");
+
+        for (int i = 0; i < 3; i++) {
+            if (cloud_list[i].length() > device_list[i].length())
+                return true;
+            else if (cloud_list[i].length() < device_list[i].length())
+                return false;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            int cloud_int = Integer.parseInt(cloud_list[i]);
+            int device_int = Integer.parseInt(device_list[i]);
+            if (cloud_int > device_int)
+                return true;
+            else if (cloud_int < device_int)
+                return false;
+        }
+
+
+        return false;
     }
 
     private void checkVersion() {
@@ -242,25 +265,29 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> taskk) {
                         PackageInfo pkgInfo = null;
 
-                        String latest = get_latest_version(taskk.getResult());
-                        HashMap<String, Object> version_content = get_version_content(taskk.getResult(), latest);
+                        HashMap<String, String> latest = get_latest_version(taskk.getResult());
+                        HashMap<String, Object> version_content = get_version_content(taskk.getResult(), latest.get("latest"));
 
                         try {
                             pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
                         } catch (PackageManager.NameNotFoundException e) {
                             e.printStackTrace();
+                            Toast.makeText(context, "取得手機當前版本失敗", Toast.LENGTH_SHORT).show();
+                            checkVersion();
+                            return;
                         }
                         String myVersion = pkgInfo.versionName;
 
-                        if (!latest.equals(myVersion)) {
+                        delete_apkFile(myVersion);
+
+                        if (!Objects.equals(latest.get("latest"), myVersion)) {
                             StringBuilder builder = new StringBuilder();
                             AlertDialog.Builder alert_builder = new AlertDialog.Builder(context);
 
-                            boolean important = version_content.get("important").toString().equals("true");
-//                    Log.d("ContentValues",task.getResult().child(unChange_latest).child("important").getValue().toString());
+                            boolean important = important_version(myVersion, latest.get("force"));
 
-                            builder.append("最新版本 : ").append(latest).append("\t\t\t當前版本 : ").append(myVersion).append("\n\n");
-                            for (int i = 0; version_content.containsKey("description"+i); i++) {
+                            builder.append("最新版本 : ").append(latest.get("latest")).append("\t\t\t當前版本 : ").append(myVersion).append("\n\n");
+                            for (int i = 0; version_content.containsKey("description" + i); i++) {
                                 char a = 248;
                                 builder.append(a).append("\t\t");
                                 builder.append(version_content.get("description" + i).toString());
@@ -269,7 +296,8 @@ public class MainActivity extends AppCompatActivity {
 
                             if (important) {
                                 builder.append('\n');
-                                builder.append("=====此為重大更新、不可以跳過=====").append('\n');
+                                builder.append("\n重大更新版本 : ").append(latest.get("force")).append("\n");
+                                builder.append("\n=====你的版本低於重大更新版本=====\n");
                             } else {
                                 alert_builder.setNegativeButton("下次再說", null);
                             }
@@ -280,22 +308,36 @@ public class MainActivity extends AppCompatActivity {
                                     .setPositiveButton("前往更新", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            checkVersion();
+//                                            checkVersion();
                                             try {
-                                                Uri uri = Uri.parse(version_content.get("uri").toString());
 
-                                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                                startActivity(intent);
-
-                                                if (important) {
+                                                request_permission("file");
+                                                if (!permissionCheck("file")) {
+                                                    Toast.makeText(context, "快點允許權限", Toast.LENGTH_LONG).show();
                                                     checkVersion();
+                                                    return;
                                                 }
 
+                                                if (check_apk_is_exist(latest.get("latest"))){
+                                                    checkVersion();
+                                                    String apkName = "/"+latest.get("latest")+".apk";
+                                                    Toast.makeText(context, "檔案已存在，去選擇安裝", Toast.LENGTH_LONG).show();
+                                                    planeB(context, context.getExternalFilesDir("/newAPK/").getAbsolutePath() + apkName);
+                                                }else{
+                                                    ProgressDialog progressDialog = new ProgressDialog(context);
+                                                    progressDialog.setTitle("正在下載檔案...");
+                                                    progressDialog.setCancelable(false);
+                                                    progressDialog.show();
+
+                                                    Toast.makeText(context, "本機內找不到檔案，正在從網路上下載", Toast.LENGTH_LONG).show();
+                                                    upData(version_content.get("uri").toString(), latest.get("latest"));
+                                                }
 
                                             } catch (NullPointerException e) {
-                                                alert_builder.setMessage("取得資料失敗...")
+                                                alert_builder.setMessage("取得更新資料失敗...")
                                                         .setNegativeButton("取消", null)
                                                         .show();
+                                                checkVersion();
                                             }
                                         }
                                     });
@@ -309,13 +351,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private boolean check_apk_is_exist(String version) {
+        String apkName = "/"+version+".apk";
+        String PATH = context.getExternalFilesDir("/newAPK/").getAbsolutePath() + apkName;
+        File file = new File(PATH);
+        return file.exists();
+    }
+    private void delete_apkFile(String version){
+        String apkName = "/"+version+".apk";
+        String PATH = context.getExternalFilesDir("/newAPK/").getAbsolutePath() + apkName;
+        File file = new File(PATH);
+        if (file.exists()){
+            file.delete();
+        }
+
+    }
+
     public void face_list(MenuItem item) {
         String title = item.getTitle().toString();
         set_menu_AlertDialog(title);
     }
 
-    private void set_menu_AlertDialog(String title){
-
+    private void set_menu_AlertDialog(String title) {
 
 
         MainActivity_Data mainActivity_data = new MainActivity_Data(context);
@@ -332,8 +389,8 @@ public class MainActivity extends AppCompatActivity {
         TextView check_button = v.findViewById(R.id.menu_face_list_check);
         TextView build_button = v.findViewById(R.id.menu_face_list_build);
 
-        switch (title){
-            case "管理人清單":{
+        switch (title) {
+            case "管理人清單": {
 
                 mainActivity_data.download("管理人清單", new Runnable() {
                     @Override
@@ -347,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             }
-            case "管理訪客清單":{
+            case "管理訪客清單": {
                 mainActivity_data.download("管理訪客清單", new Runnable() {
                     @Override
                     public void run() {
@@ -360,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             }
-            case "觀看截圖清單":{
+            case "觀看截圖清單": {
                 build_button.setVisibility(View.GONE);
 
                 mainActivity_data.download("觀看截圖清單", new Runnable() {
@@ -376,7 +433,6 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-
 
 
                 break;
@@ -409,36 +465,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         String type = "file";
-                        if (!check_permission(type))
+                        request_permission(type);
+                        if (!permissionCheck(type)) {
+                            Toast.makeText(context, "請允許權限", Toast.LENGTH_LONG).show();
                             return;
-
+                        }
                         chose_image(type);
-
-
-//                        new AlertDialog.Builder(context).setTitle("從哪裡取得照片?")
-//                                .setNegativeButton("從檔案", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        String type = "file";
-//                                        if (!check_permission(type))
-//                                            return;
-//
-//                                        chose_image(type);
-//
-//                                    }
-//                                })
-//                                .setPositiveButton("從相機", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        String type = "camera";
-//                                        if (!check_permission(type))
-//                                            return;
-//
-//                                        chose_image(type);
-//
-//                                    }
-//                                })
-//                                .show();
                     }
                 });
 
@@ -448,13 +480,14 @@ public class MainActivity extends AppCompatActivity {
                 build_check_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        byte[] bytes = bitmapToByte(temp_bitmap);
                         String edit_name = build_edit.getEditableText().toString();
 
-                        if (edit_name == null || temp_bitmap == null){
+                        if (edit_name.equals("") || temp_bitmap == null) {
                             Toast.makeText(context, "圖片內容或姓名沒打!!!", Toast.LENGTH_LONG).show();
                             return;
                         }
+
+                        byte[] bytes = bitmapToByte(temp_bitmap);
 
                         ProgressDialog progressDialog = new ProgressDialog(context);
                         progressDialog.setTitle("上傳照片中...");
@@ -487,31 +520,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private boolean check_permission(String type){
 
-        switch (type){
+    private boolean permissionCheck(String type) {
 
-            case "camera":{
-                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED){
+        switch (type) {
 
-                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
-
-                }
-
-                return ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
+            case "camera": {
+                return ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
             }
 
-            case "file":{
-
-                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED){
-
-                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
-
+            case "file": {
+                return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+            }
+            case "install": {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    return ActivityCompat.checkSelfPermission(this, Manifest.permission.REQUEST_INSTALL_PACKAGES) == PackageManager.PERMISSION_GRANTED;
+                }else {
+                    return true;
                 }
-
-                return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
 
             }
 
@@ -520,15 +546,48 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
 
+    private void request_permission(String type) {
+        switch (type) {
 
+            case "camera": {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
 
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+
+                }
+            }
+
+            case "file": {
+
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
+
+                }
+            }
+            case "install": {
+
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.REQUEST_INSTALL_PACKAGES)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, 3);
+                    }
+
+                }
+
+            }
+        }
     }
 
     private void chose_image(String type) {
 
-        switch (type){
-            case "file":{
+        switch (type) {
+            case "file": {
                 Intent intent = new Intent(Intent.ACTION_PICK, null);
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -536,7 +595,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case "camera":{
+            case "camera": {
 //                ContentValues value = new ContentValues();
 //                value.put(MediaStore.Audio.Media.MIME_TYPE, "image/jpeg");
 //                Uri uri= getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -566,64 +625,27 @@ public class MainActivity extends AppCompatActivity {
 
                 ContentResolver cr = this.getContentResolver();
 
-                Bitmap bitmap = null;
                 temp_bitmap = null;
                 try {
-                    bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-                    bitmap = resizeBitMap(bitmap);
-                    build_image.setImageBitmap(bitmap);
-                    temp_bitmap = bitmap;
+                    temp_bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
+                    build_image.setImageBitmap(temp_bitmap);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
-                } catch (OutOfMemoryError ee){
+                } catch (OutOfMemoryError ee) {
                     try {
                         BitmapFactory.Options mOptions = new BitmapFactory.Options();
                         //Size=2為將原始圖片縮小1/2，Size=4為1/4，以此類推
                         mOptions.inSampleSize = 3;
-                        bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri),null,mOptions);
-                        build_image.setImageBitmap(bitmap);
-                        temp_bitmap = bitmap;
+                        temp_bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri), null, mOptions);
+                        build_image.setImageBitmap(temp_bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
 
 
-
             }
         }
-    }
-
-    public Bitmap resizeBitMap(Bitmap bitmap){
-        Matrix matrix = new Matrix();
-
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-
-//想要的大小
-        int newWidth = 360;
-        int newHeight = 520;
-
-//計算比例
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-// 設定 Matrix 物件，設定 x,y 向的縮放比例
-        matrix.postScale(scaleWidth, scaleHeight);
-
-/*
- * creatBitmp的參數依序如下：
- * 原圖資源
- * 第一個pixel點的x座標
- * 第一個pixel點的y座標
- * 圖片的總pixel行
- * 圖片的總pixel列
- * Matrix 的設定
- * 是否filter圖片
- */
-        return Bitmap.createBitmap(bitmap, 0, 0,
-                bitmap.getWidth(), bitmap.getHeight(),
-                matrix, true);
     }
 
     public Bitmap convertbytesToIcon(byte[] output) {
@@ -636,10 +658,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public byte[] bitmapToByte(Bitmap bitmap){
-        ByteArrayOutputStream bStream=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,bStream);
+    public byte[] bitmapToByte(Bitmap bitmap) {
+        ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream);
         return bStream.toByteArray();
     }
 
+    public void upData(String url, String apkName) {
+        Intent updataService = new Intent(context, UpdateService.class);
+        updataService.putExtra("downloadurl", url);
+        updataService.putExtra("apkName", apkName);
+        startService(updataService);
+    }
+
+    private void planeB(Context context, String PATH) {
+
+        File file = new File(PATH);
+        Uri uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+
+        Intent intent = new Intent();
+//            intent.setAction("android.intent.action.INSTALL_PACKAGE");
+        intent.setAction(Intent.ACTION_INSTALL_PACKAGE);
+//            intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        startActivity(intent);
+    }
 }

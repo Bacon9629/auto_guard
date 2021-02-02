@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
 
 import javax.xml.transform.Result;
@@ -69,7 +70,7 @@ class MainActivity_Data {
     }
 
     public void download(String title, Runnable do_next) {
-        OnFailureListener failureListener = e -> Toast.makeText(context, "下載失敗", Toast.LENGTH_LONG).show();
+        OnFailureListener failureListener = e -> Toast.makeText(context, "下載失敗，正在重新執行", Toast.LENGTH_LONG).show();
 
         switch (title) {
             case "管理人清單": {
@@ -123,6 +124,7 @@ class MainActivity_Data {
         };
         switch (title) {
             case "管理人清單": {
+                Log.d(TAG, name);
                 storage.child(("admin_image/" + name + ".png")).delete().addOnFailureListener(failureListener);
                 img_db.document("admin_list").update(name, FieldValue.delete())
                         .addOnFailureListener(failureListener);
@@ -145,7 +147,7 @@ class MainActivity_Data {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, "刪除資料失敗", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "刪除資料失敗，正在重新執行", Toast.LENGTH_SHORT).show();
                             delete(title, date, time);
                         }
                     });
@@ -195,7 +197,7 @@ class MainActivity_Data {
                             Uri downloadUri = task.getResult();
                             HashMap<String , Object> map = new HashMap<>();
                             map.put("image", downloadUri.toString());
-                            map.put("pass", false);
+                            map.put("pass", "待測");
 
                             img_db.document("admin_list").update(name, map)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -207,12 +209,12 @@ class MainActivity_Data {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(context, "上傳失敗", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "上傳失敗，正在重新執行", Toast.LENGTH_SHORT).show();
                                             upload(title, name, image, do_next);
                                         }
                                     });
                         } else {
-                            Toast.makeText(context, "上傳失敗", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "上傳失敗，正在重新執行", Toast.LENGTH_SHORT).show();
                             upload(title, name, image, do_next);
                         }
                     }
@@ -221,18 +223,13 @@ class MainActivity_Data {
                 break;
             }
             case "管理訪客清單": {
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("until", getDateTime());
-                map.put("image", "");
-                map.put("pass", false);
-
                 StorageReference db_path = storage.child(("custom_image/" + name + ".png"));
                 UploadTask uploadTask = db_path.putBytes(image);
                 Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                         if (!task.isSuccessful()) {
-                            throw task.getException();
+                            throw Objects.requireNonNull(task.getException());
                         }
 
                         // Continue with the task to get the download URL
@@ -243,9 +240,10 @@ class MainActivity_Data {
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
                             Uri downloadUri = task.getResult();
-                            HashMap<String , Object> map = new HashMap<>();
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("until", getDateTime());
                             map.put("image", downloadUri.toString());
-                            map.put("pass", false);
+                            map.put("pass", "待測");
 
                             img_db.document("custom_list").update(name, map)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -257,12 +255,12 @@ class MainActivity_Data {
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(context, "上傳失敗", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "上傳失敗，正在重新執行", Toast.LENGTH_SHORT).show();
                                             upload(title, name, image, do_next);
                                         }
                                     });
                         } else {
-                            Toast.makeText(context, "上傳失敗", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "上傳失敗，正在重新執行", Toast.LENGTH_SHORT).show();
                             upload(title, name, image, do_next);
                         }
                     }
@@ -271,10 +269,6 @@ class MainActivity_Data {
             }
 
         }
-    }
-
-    private void get_uri_image(){
-
     }
 
     public String getDateTime() {

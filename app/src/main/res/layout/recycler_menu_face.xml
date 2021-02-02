@@ -55,4 +55,13 @@
         app:layout_constraintStart_toStartOf="@+id/menu_face_list_recycler_outside"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/face" />
+
+    <TextView
+        android:id="@+id/menu_face_list_build_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

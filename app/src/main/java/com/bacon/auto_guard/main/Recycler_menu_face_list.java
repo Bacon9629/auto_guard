@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -97,8 +98,16 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
                 
                 try{
                     URL url = new URL(strings[0]);
-                    
-                    bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                    try{
+                        bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    } catch (OutOfMemoryError ee){
+                        BitmapFactory.Options mOptions = new BitmapFactory.Options();
+                        //Size=2為將原始圖片縮小1/2，Size=4為1/4，以此類推
+                        mOptions.inSampleSize = 3;
+                        bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream(),null,mOptions);
+                    }
+
                     
                 } catch (IOException e){
                     e.printStackTrace();
@@ -133,6 +142,8 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
 
             if (is_parent){
 
+                holder.pass.setText("");
+
                 holder.textView.setText(date_key.get(position).replace(":", "/"));
                 holder.textView.setTag(date_key.get(position));
 //                holder.textView.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +163,7 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
                 holder.outside.setOnLongClickListener(null);
 
             }else{
-
+                holder.pass.setText("");
                 if (position == 0){
                     holder.image.setVisibility(View.GONE);
                     holder.textView.setText("上一頁");
@@ -217,29 +228,12 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
                 download_image_async(this_one_data.get("image").toString(), holder.image, image_map);
             }
 
+            change_pass_text_color(holder.pass, this_one_data.get("pass").toString());
+
             holder.textView.setText(person_key.get(position));
 
             holder.outside.setTag(person_key.get(position));
-            holder.outside.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("你要對他幹嘛?")
-                            .setPositiveButton("刪掉他", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    db.delete("管理人清單", v.getTag().toString());
-                                    allList_data.remove(v.getTag().toString());
-                                    person_key.remove(v.getTag().toString());
-                                    notifyDataSetChanged();
-
-                                }
-                            })
-                            .setNegativeButton("沒事", null).show();
-                    return false;
-                }
-            });
+            holder.outside.setOnLongClickListener(longClickListener("管理人清單"));
 
         }else if ("管理訪客清單".equals(title)){
             Map map = (Map) allList_data.get(person_key.get(position));
@@ -248,39 +242,63 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
             if (image_map.containsKey(person_key.get(position))){
                 holder.image.setImageBitmap((Bitmap) image_map.get(person_key.get(position)));
             }else{
-                Log.d(TAG, map.get("image").toString());
                 download_image_async(map.get("image").toString(), holder.image, image_map);
             }
+
+            change_pass_text_color(holder.pass, map.get("pass").toString());
 
             String string = person_key.get(position) + "\n到期日 : " + map.get("until");
             holder.textView.setText(string);
 
             holder.outside.setTag(person_key.get(position));
-            holder.outside.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("你要對他幹嘛?")
-                            .setPositiveButton("刪掉他", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    db.delete("管理訪客清單", v.getTag().toString());
-                                    allList_data.remove(v.getTag().toString());
-                                    person_key.remove(v.getTag().toString());
-                                    notifyDataSetChanged();
-
-                                }
-                            })
-                            .setNegativeButton("沒事", null).show();
-
-                    return false;
-                }
-            });
+            holder.outside.setOnLongClickListener(longClickListener("管理訪客清單"));
 
 
         }
+    }
+
+    private void change_pass_text_color(TextView view, String pass){
+        view.setText(pass);
+        switch (pass){
+
+            case "待測":{
+                view.setTextColor(0xFF2E5BFF);
+                break;
+            }
+            case "未通過":{
+                view.setTextColor(0xFFFF0000);
+                break;
+            }
+            case "通過":{
+                view.setTextColor(0xFF00FF00);
+                break;
+            }
+
+        }
+    }
+
+    private View.OnLongClickListener longClickListener(String title){
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("你要對他幹嘛?")
+                        .setPositiveButton("刪掉他", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                db.delete(title, v.getTag().toString());
+                                allList_data.remove(v.getTag().toString());
+                                person_key.remove(v.getTag().toString());
+                                notifyDataSetChanged();
+
+                            }
+                        })
+                        .setNegativeButton("沒事", null).show();
+
+                return false;
+            }
+        };
     }
 
     public Bitmap convertbytesToIcon(byte[] output) {
@@ -311,31 +329,16 @@ class Recycler_menu_face_list extends RecyclerView.Adapter<Recycler_menu_face_li
         ImageView image;
         TextView textView;
         TextView outside;
+        TextView pass;
 
         public viewHolder(@NonNull View v) {
             super(v);
             image = v.findViewById(R.id.menu_face_list_build_image);
             textView = v.findViewById(R.id.menu_face_list_build_edit);
             outside = v.findViewById(R.id.menu_face_list_recycler_outside);
+            pass = v.findViewById(R.id.menu_face_list_build_pass);
         }
     }
 
-}
-
-class image_asyncTask extends AsyncTask<String, Integer, Bitmap>{
-
-    image_asyncTask(){
-
-    }
-
-    @Override
-    protected Bitmap doInBackground(String... strings) {
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        super.onPostExecute(bitmap);
-    }
 }
 
